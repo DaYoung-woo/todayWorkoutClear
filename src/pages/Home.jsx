@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
   homeContainer: {
     flexDirection: 'row',
     paddingHorizontal: 8,
-    color: '#333',
+    color: '#555',
   },
   topBar: {
     flex: 1,

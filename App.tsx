@@ -7,10 +7,14 @@
 
 import * as React from 'react';
 import Router from './src/router';
-import 'react-native-gesture-handler';
+import {GestureHandlerRootView} from 'react-native-gesture-handler';
 
 function App(): React.JSX.Element {
-  return <Router />;
+  return (
+    <GestureHandlerRootView>
+      <Router />
+    </GestureHandlerRootView>
+  );
 }
 
 export default App;

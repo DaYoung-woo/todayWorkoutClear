@@ -1,15 +1,20 @@
 import React, {useEffect} from 'react';
 import {View, Text, StyleSheet, Image} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {contain} from '../../node_modules/@hapi/hoek/lib/index.d';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Splash = ({navigation}) => {
   useEffect(() => {
     movePage();
   }, []);
-  const movePage = () => {
+  const movePage = async () => {
+    const isLogin = await AsyncStorage.getItem('isLogin');
     setTimeout(() => {
-      navigation.navigate('Home');
+      if (JSON.parse(isLogin)) {
+        navigation.navigate('Home');
+      } else {
+        navigation.navigate('Login');
+      }
     }, 2000);
   };
 
@@ -18,7 +23,7 @@ const Splash = ({navigation}) => {
       <View style={styles.wrapper}>
         <Image
           source={require('../assets/icons/logo.png')}
-          style={styles.logoImage}
+          style={styles.logoIcon}
           resizeMode="contain"
         />
         <Text style={styles.logoText}>오운완</Text>
@@ -32,13 +37,13 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#E6F5FF',
+    backgroundColor: '#F1F9FF',
   },
   wrapper: {
     flexDirection: 'row',
     alignItems: 'center',
   },
-  logoImage: {
+  logoIcon: {
     height: 80,
     width: 80,
     marginTop: -8,

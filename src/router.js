@@ -4,10 +4,22 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Splash from './pages/Splash';
+import BasicHeader from './components/BasicHeader';
 
 const Stack = createNativeStackNavigator();
 
 const Router = () => {
+  const basicHeader = ({options, navigation}) => {
+    return (
+      <BasicHeader
+        {...options}
+        title={options.title}
+        back={options.back}
+        navigation={navigation}
+      />
+    );
+  };
+
   return (
     <NavigationContainer>
       <Stack.Navigator>
@@ -19,7 +31,11 @@ const Router = () => {
         <Stack.Screen
           name="Login"
           component={Login}
-          options={{headerShown: false}}
+          options={{
+            header: basicHeader,
+            title: '로그인',
+            back: false,
+          }}
         />
         <Stack.Screen
           name="Home"
