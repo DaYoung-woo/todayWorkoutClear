@@ -7,8 +7,10 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import {registApi} from '../api/index';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import Toast from 'react-native-toast-message';
 
-const Regist = () => {
+const Regist = ({navigation}) => {
   const [submit, setSubmit] = useState(false);
   const [form, setForm] = useState({
     password: '',
@@ -86,11 +88,28 @@ const Regist = () => {
       delete param.passwordCheck;
 
       const res = await registApi(param);
-      console.log(res);
+      if (res.data.success) {
+        try {
+          await AsyncStorage.setItem(
+            'userData',
+            JSON.stringify(res.data.result),
+          );
+          navigation.navigate('Home');
+        } catch (e) {
+          console.log(e);
+        }
+      }
     } catch (e) {
-      console.log(e);
+      const msg = '작성하신 내용을 다시 확인해주세요.';
+
+      console.log(e.response);
+      Toast.show({
+        type: 'error',
+        text1: msg,
+      });
     }
   };
+
   return (
     <View style={styles.container}>
       {/* 이메일 */}
@@ -129,10 +148,7 @@ const Regist = () => {
           placeholder="비밀번호 확인"
         />
 
-        <Text style={styles.errorMsg}>
-          {' '}
-          {submit && getPasswordCheckValid()}
-        </Text>
+        <Text style={styles.errorMsg}>{submit && getPasswordCheckValid()}</Text>
       </View>
 
       {/* 닉네임 */}

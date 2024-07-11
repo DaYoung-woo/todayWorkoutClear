@@ -8,9 +8,9 @@ const Splash = ({navigation}) => {
     movePage();
   }, []);
   const movePage = async () => {
-    const isLogin = await AsyncStorage.getItem('isLogin');
+    const userData = await AsyncStorage.getItem('userData');
     setTimeout(() => {
-      if (JSON.parse(isLogin)) {
+      if (JSON.parse(userData)) {
         navigation.navigate('Home');
       } else {
         navigation.navigate('Login');
