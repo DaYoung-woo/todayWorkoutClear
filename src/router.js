@@ -5,6 +5,7 @@ import Home from './pages/Home';
 import Login from './pages/Login';
 import Splash from './pages/Splash';
 import BasicHeader from './components/BasicHeader';
+import Regist from './pages/Regist';
 
 const Stack = createNativeStackNavigator();
 
@@ -31,10 +32,24 @@ const Router = () => {
         <Stack.Screen
           name="Login"
           component={Login}
+          options={{headerShown: false}}
+        />
+        {/* <Stack.Screen
+          name="Login"
+          component={Login}
           options={{
             header: basicHeader,
             title: '로그인',
             back: false,
+          }}
+        /> */}
+        <Stack.Screen
+          name="Regist"
+          component={Regist}
+          options={{
+            header: basicHeader,
+            title: '회원가입',
+            back: true,
           }}
         />
         <Stack.Screen

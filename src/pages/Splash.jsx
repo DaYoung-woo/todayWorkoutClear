@@ -19,7 +19,7 @@ const Splash = ({navigation}) => {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <View style={styles.wrapper}>
         <Image
           source={require('../assets/icons/logo.png')}
@@ -28,7 +28,7 @@ const Splash = ({navigation}) => {
         />
         <Text style={styles.logoText}>오운완</Text>
       </View>
-    </SafeAreaView>
+    </View>
   );
 };
 
