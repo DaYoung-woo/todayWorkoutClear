@@ -1,9 +1,12 @@
-const axios = require('axios');
-import {API_URL} from '@env';
+import axios from 'axios';
 
 const instance = axios.create({
-  baseURL: API_URL,
+  baseURL: 'http://13.209.27.220:8080',
   timeout: 7000,
+  headers: {
+    'Content-type': 'Application/json',
+    Accept: 'Application/json',
+  },
 });
 
 export const loginApi = params => {
