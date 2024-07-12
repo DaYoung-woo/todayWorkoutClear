@@ -9,11 +9,19 @@ const instance = axios.create({
     'Content-type': 'Application/json',
     Accept: 'Application/json',
   },
+  withCredentials: true,
 });
+
+// 쿼리 스트링 생성
+const makeQueryString = obj => {
+  return Object.entries(obj)
+    .map((el, idx) => `${idx === 0 ? '?' : '&'}${el[0]}=${el[1]}`)
+    .join('');
+};
 
 // header 쿠키 세팅
 export const setCookie = cookie => {
-  instance.defaults.headers.Cookies = JSON.parse(cookie);
+  instance.defaults.headers.Cookies = cookie;
 };
 
 // 로그인 api
@@ -24,4 +32,15 @@ export const loginApi = params => {
 // 회원가입 api
 export const registApi = params => {
   return instance.post('/accounts', params);
+};
+
+// 피드 리스트 api
+export const feedListApi = params => {
+  console.log(`/feed${makeQueryString(params)}`);
+  return instance.get(`/feed${makeQueryString(params)}`);
+};
+
+// 피드 추가 api
+export const addFeedList = params => {
+  return instance.post('/feed', params);
 };

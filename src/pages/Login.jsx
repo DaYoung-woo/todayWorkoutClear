@@ -1,7 +1,8 @@
 import React, {useState} from 'react';
-import {StyleSheet, Text, View, TextInput, Image} from 'react-native';
+import {Text, View, TextInput, Image} from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {SafeAreaView} from 'react-native-safe-area-context';
+import {login as styles} from '../styles';
 import {loginApi, setCookie} from '../api';
 import Toast from 'react-native-toast-message';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -27,7 +28,7 @@ const Login = ({navigation}) => {
         password,
       };
       const res = await loginApi(param);
-
+      console.log(res);
       // 쿠키 저장 후 홈화면으로 이동
       saveCookieStorage(res);
       navigation.navigate('Home');
@@ -37,16 +38,16 @@ const Login = ({navigation}) => {
         type: 'error',
         text1: text,
       });
-      console.log(e?.response?.data);
-      console.log(e.reponse.status);
     }
   };
 
   const saveCookieStorage = async res => {
     const [cookie] = res.headers['set-cookie'];
-    setCookie(JSON.stringify(cookie));
+    const stringCookie = JSON.stringify(cookie);
+    //setCookie(stringCookie);
+
     try {
-      await AsyncStorage.setItem('cookie', JSON.stringify(cookie));
+      await AsyncStorage.setItem('cookie', stringCookie);
       console.log(cookie);
     } catch (e) {
       console.log(e);
@@ -112,79 +113,5 @@ const Login = ({navigation}) => {
     </SafeAreaView>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-  },
-  wrapper: {
-    paddingHorizontal: 16,
-    paddingTop: 8,
-    paddingBottom: 16,
-  },
-  logoArea: {
-    marginTop: 40,
-    marginBottom: 20,
-    alignItems: 'center',
-    flexDirection: 'row',
-    justifyContent: 'center',
-  },
-  logoIcon: {
-    height: 60,
-    width: 60,
-    marginTop: -14,
-  },
-  logoText: {
-    fontFamily: 'JalnanGothicTTF',
-    fontSize: 32,
-    color: '#2E8CF4',
-  },
-  textInputLabel: {
-    fontFamily: 'NotoSansKR-VariableFont_wght',
-    paddingBottom: 12,
-    fontWeight: '600',
-    fontSize: 16,
-    color: '#555',
-  },
-  textInput: {
-    fontFamily: 'NotoSansKR-VariableFont_wght',
-    borderWidth: 1,
-    width: '100%',
-    padding: 12,
-    borderRadius: 5,
-    fontSize: 16,
-    borderColor: '#aaa',
-  },
-  errorMsg: {
-    color: 'red',
-    paddingTop: 4,
-    height: 24,
-    marginLeft: 2,
-  },
-  loginBtn: {
-    backgroundColor: '#2E8CF4',
-    alignItems: 'center',
-    borderRadius: 5,
-    padding: 16,
-    marginTop: 12,
-  },
-  loginBtnText: {
-    fontFamily: 'NotoSansKR-VariableFont_wght',
-    fontSize: 16,
-    fontWeight: 'bold',
-
-    color: '#fff',
-  },
-  registBtn: {
-    alignItems: 'center',
-    paddingVertical: 12,
-  },
-  registBtnText: {
-    color: '#2E8CF4',
-    fontSize: 16,
-    fontWeight: 'semibold',
-  },
-});
 
 export default Login;

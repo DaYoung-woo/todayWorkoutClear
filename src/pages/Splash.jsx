@@ -1,26 +1,16 @@
 import React, {useEffect} from 'react';
 import {View, Text, StyleSheet, Image} from 'react-native';
-import {SafeAreaView} from 'react-native-safe-area-context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {setCookie} from '../api';
 
 const Splash = ({navigation}) => {
   useEffect(() => {
-    movePage();
+    checkCookieExist();
   }, []);
 
-  const checkCookieExpire = storageCookie => {
-    const cookie = JSON.parse(storageCookie);
-    const expire = cookie.match('(^|;) ?Expires=([^;]*)(;|$)')[2];
-    const now = new Date();
-    if (now < expire) {
-      navigation.navigate('Login');
-    } else {
-      navigation.navigate('Home');
-    }
-  };
-  const movePage = async () => {
+  // 쿠키가 존재하는지 확인
+  const checkCookieExist = async () => {
     const storageCookie = await AsyncStorage.getItem('cookie');
-
     setTimeout(() => {
       if (!storageCookie) {
         navigation.navigate('Login');
@@ -28,6 +18,19 @@ const Splash = ({navigation}) => {
         checkCookieExpire(storageCookie);
       }
     }, 2000);
+  };
+
+  // 쿠키 유효기간이 남아있는지 확인
+  const checkCookieExpire = storageCookie => {
+    const cookie = JSON.parse(storageCookie);
+    const expire = cookie.match('(^|;) ?Expires=([^;]*)(;|$)')[2];
+    const now = new Date();
+    if (now < expire) {
+      navigation.navigate('Login');
+    } else {
+      //setCookie(storageCookie);
+      navigation.navigate('Home');
+    }
   };
 
   return (

@@ -1,14 +1,9 @@
 import React, {useState} from 'react';
-import {
-  StyleSheet,
-  Text,
-  View,
-  TextInput,
-  TouchableOpacity,
-} from 'react-native';
-import {registApi} from '../api/index';
-import Toast from 'react-native-toast-message';
+import {Text, View, TextInput, TouchableOpacity} from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
+import Toast from 'react-native-toast-message';
+import {regist as styles} from '../styles';
+import {registApi} from '../api/index';
 
 const Regist = ({navigation}) => {
   const [submit, setSubmit] = useState(false);
@@ -192,51 +187,5 @@ const Regist = ({navigation}) => {
     </ScrollView>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    backgroundColor: '#fff',
-    flex: 1,
-  },
-  wrapper: {
-    paddingHorizontal: 16,
-    paddingBottom: 12,
-  },
-  textInputLabel: {
-    fontFamily: 'NotoSansKR-VariableFont_wght',
-    paddingBottom: 12,
-    fontWeight: '600',
-    fontSize: 16,
-    color: '#555',
-  },
-  textInput: {
-    fontFamily: 'NotoSansKR-VariableFont_wght',
-    borderWidth: 1,
-    width: '100%',
-    padding: 12,
-    borderRadius: 5,
-    fontSize: 16,
-    borderColor: '#aaa',
-  },
-  errorMsg: {
-    color: 'red',
-    paddingTop: 4,
-    height: 20,
-    marginLeft: 2,
-  },
-  registBtn: {
-    backgroundColor: '#2E8CF4',
-    alignItems: 'center',
-    borderRadius: 5,
-    padding: 16,
-    marginTop: 20,
-  },
-  registBtnText: {
-    fontFamily: 'NotoSansKR-VariableFont_wght',
-    fontSize: 16,
-    fontWeight: 'bold',
-    color: '#fff',
-  },
-});
 
 export default Regist;
