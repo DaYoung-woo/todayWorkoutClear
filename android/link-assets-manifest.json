@@ -6,6 +6,14 @@
       "sha1": "d03b79dd09dcb235d80593523b211447bab3f620"
     },
     {
+      "path": "src/assets/fonts/GmarketSansTTFMedium.ttf",
+      "sha1": "abf7d6ce1869bad059315fc748aa2d5d56d00892"
+    },
+    {
+      "path": "src/assets/fonts/JalnanGothicTTF.ttf",
+      "sha1": "b6f2a6000f6ea1ae8b341cf74686cb919412ea8d"
+    },
+    {
       "path": "src/assets/fonts/Jua-Regular.ttf",
       "sha1": "9122d54d461d57735caeeb843b9961a96225468b"
     },

@@ -7,8 +7,8 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import {registApi} from '../api/index';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import Toast from 'react-native-toast-message';
+import {ScrollView} from 'react-native-gesture-handler';
 
 const Regist = ({navigation}) => {
   const [submit, setSubmit] = useState(false);
@@ -66,7 +66,10 @@ const Regist = ({navigation}) => {
     return '';
   };
 
+  // 회원가입 전 유효성 검사 확인하고 회원가입 api 요청
   const sumbitForm = () => {
+    setSubmit(true);
+
     if (getEmailValid().length > 0) {
       return;
     }
@@ -87,18 +90,12 @@ const Regist = ({navigation}) => {
       const param = {...form};
       delete param.passwordCheck;
 
-      const res = await registApi(param);
-      if (res.data.success) {
-        try {
-          await AsyncStorage.setItem(
-            'userData',
-            JSON.stringify(res.data.result),
-          );
-          navigation.navigate('Home');
-        } catch (e) {
-          console.log(e);
-        }
-      }
+      await registApi(param);
+      Toast.show({
+        type: 'success',
+        text1: '회원가입이 완료되었습니다.',
+      });
+      navigation.navigate('Login');
     } catch (e) {
       const msg = '작성하신 내용을 다시 확인해주세요.';
 
@@ -111,7 +108,7 @@ const Regist = ({navigation}) => {
   };
 
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       {/* 이메일 */}
       <View style={styles.wrapper}>
         <Text style={styles.textInputLabel}>이메일</Text>
@@ -188,16 +185,11 @@ const Regist = ({navigation}) => {
 
       {/* 회원가입 버튼 */}
       <View style={styles.wrapper}>
-        <TouchableOpacity
-          style={styles.registBtn}
-          onPress={() => {
-            setSubmit(true);
-            sumbitForm();
-          }}>
+        <TouchableOpacity style={styles.registBtn} onPress={sumbitForm}>
           <Text style={styles.registBtnText}>회원가입</Text>
         </TouchableOpacity>
       </View>
-    </View>
+    </ScrollView>
   );
 };
 

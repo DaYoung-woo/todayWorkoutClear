@@ -7,13 +7,25 @@ const Splash = ({navigation}) => {
   useEffect(() => {
     movePage();
   }, []);
+
+  const checkCookieExpire = storageCookie => {
+    const cookie = JSON.parse(storageCookie);
+    const expire = cookie.match('(^|;) ?Expires=([^;]*)(;|$)')[2];
+    const now = new Date();
+    if (now < expire) {
+      navigation.navigate('Login');
+    } else {
+      navigation.navigate('Home');
+    }
+  };
   const movePage = async () => {
-    const userData = await AsyncStorage.getItem('userData');
+    const storageCookie = await AsyncStorage.getItem('cookie');
+
     setTimeout(() => {
-      if (JSON.parse(userData)) {
-        navigation.navigate('Home');
-      } else {
+      if (!storageCookie) {
         navigation.navigate('Login');
+      } else {
+        checkCookieExpire(storageCookie);
       }
     }, 2000);
   };
@@ -22,7 +34,7 @@ const Splash = ({navigation}) => {
     <View style={styles.container}>
       <View style={styles.wrapper}>
         <Image
-          source={require('../assets/icons/logo.png')}
+          source={require('../assets/icons/arm.png')}
           style={styles.logoIcon}
           resizeMode="contain"
         />
@@ -46,11 +58,11 @@ const styles = StyleSheet.create({
   logoIcon: {
     height: 80,
     width: 80,
-    marginTop: -8,
+    marginTop: -16,
   },
   logoText: {
-    fontFamily: 'GamjaFlower-Regular',
-    fontSize: 52,
+    fontFamily: 'JalnanGothicTTF',
+    fontSize: 40,
     color: '#2E8CF4',
   },
 });

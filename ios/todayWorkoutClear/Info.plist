@@ -31,13 +31,13 @@
 		<key>NSAllowsLocalNetworking</key>
 		<true/>
 		<key>NSExceptionDomains</key>
-    <dict>
-        <key>13.209.27.220</key>
-        <dict>
-            <key>NSExceptionAllowsInsecureHTTPLoads</key>
-            <true/>
-        </dict>
-    </dict>
+		<dict>
+			<key>13.209.27.220</key>
+			<dict>
+				<key>NSExceptionAllowsInsecureHTTPLoads</key>
+				<true/>
+			</dict>
+		</dict>
 	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string/>
@@ -61,6 +61,8 @@
 		<string>Jua-Regular.ttf</string>
 		<string>NanumPenScript-Regular.ttf</string>
 		<string>NotoSansKR-VariableFont_wght.ttf</string>
+		<string>JalnanGothicTTF.ttf</string>
+		<string>GmarketSansTTFMedium.ttf</string>
 	</array>
 </dict>
 </plist>
