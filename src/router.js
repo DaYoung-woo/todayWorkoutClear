@@ -31,7 +31,8 @@ const basicHeader = ({options, navigation}) => {
 const loadBottomTab = props => {
   return <BottomTab {...props} />;
 };
-const MainTabs = () => {
+
+const MainTabs = props => {
   return (
     <Tab.Navigator tabBar={loadBottomTab}>
       <Tab.Screen name="Home" component={Home} options={{headerShown: false}} />
@@ -40,7 +41,12 @@ const MainTabs = () => {
         component={Search}
         options={{headerShown: false}}
       />
-      <Tab.Screen name="Plus" component={Plus} options={{headerShown: false}} />
+      <Tab.Screen
+        name="Plus"
+        component={Plus}
+        options={{headerShown: false}}
+        {...props}
+      />
       <Tab.Screen name="Play" component={Play} options={{headerShown: false}} />
       <Tab.Screen
         name="Account"
@@ -53,39 +59,33 @@ const MainTabs = () => {
 
 const Router = () => {
   return (
-    <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen
-          name="MainTabs"
-          component={MainTabs}
-          options={{headerShown: false}}
-        />
-        <Stack.Screen
-          name="Home"
-          component={Home}
-          options={{headerShown: false}}
-        />
-        <Stack.Screen
-          name="Splash"
-          component={Splash}
-          options={{headerShown: false}}
-        />
-        <Stack.Screen
-          name="Login"
-          component={Login}
-          options={{headerShown: false}}
-        />
-        <Stack.Screen
-          name="Regist"
-          component={Regist}
-          options={{
-            header: basicHeader,
-            title: '회원가입',
-            back: true,
-          }}
-        />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <Stack.Navigator>
+      <Stack.Screen
+        name="Splash"
+        component={Splash}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="Login"
+        component={Login}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="Regist"
+        component={Regist}
+        options={{
+          header: basicHeader,
+          title: '회원가입',
+          back: true,
+        }}
+      />
+
+      <Stack.Screen
+        name="MainTabs"
+        component={MainTabs}
+        options={{headerShown: false}}
+      />
+    </Stack.Navigator>
   );
 };
 

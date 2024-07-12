@@ -36,7 +36,7 @@ export const registApi = params => {
 
 // 피드 리스트 api
 export const feedListApi = params => {
-  console.log(`/feed${makeQueryString(params)}`);
+  console.log(instance.defaults.headers.Cookies);
   return instance.get(`/feed${makeQueryString(params)}`);
 };
 

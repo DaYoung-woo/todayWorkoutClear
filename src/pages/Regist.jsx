@@ -94,7 +94,6 @@ const Regist = ({navigation}) => {
     } catch (e) {
       const msg = '작성하신 내용을 다시 확인해주세요.';
 
-      console.log(e.response);
       Toast.show({
         type: 'error',
         text1: msg,

@@ -27,11 +27,10 @@ const Login = ({navigation}) => {
         email,
         password,
       };
-      const res = await loginApi(param);
-      console.log(res);
+      const res = await loginApi(param); //instance.post('/auth', params);
       // 쿠키 저장 후 홈화면으로 이동
       saveCookieStorage(res);
-      navigation.navigate('Home');
+      navigation.navigate('MainTab');
     } catch (e) {
       const text = e?.response?.data?.message || '에러가 발생했습니다.';
       Toast.show({
@@ -48,7 +47,6 @@ const Login = ({navigation}) => {
 
     try {
       await AsyncStorage.setItem('cookie', stringCookie);
-      console.log(cookie);
     } catch (e) {
       console.log(e);
     }

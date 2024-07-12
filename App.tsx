@@ -8,13 +8,16 @@
 import * as React from 'react';
 import Router from './src/router';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
+import {NavigationContainer} from '@react-navigation/native';
 import Toast from 'react-native-toast-message';
 
 function App(): React.JSX.Element {
   return (
     <GestureHandlerRootView>
-      <Router />
-      <Toast />
+      <NavigationContainer>
+        <Router />
+        <Toast />
+      </NavigationContainer>
     </GestureHandlerRootView>
   );
 }

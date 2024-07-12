@@ -64,5 +64,9 @@
 		<string>JalnanGothicTTF.ttf</string>
 		<string>GmarketSansTTFMedium.ttf</string>
 	</array>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Allow access to your photo gallery</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Allow access to your camera</string>
 </dict>
 </plist>

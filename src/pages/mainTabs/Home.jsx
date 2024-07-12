@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Image, StyleSheet, Text, View} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import ChatSvg from '../../assets/icons/chat.svg';
@@ -6,8 +6,9 @@ import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
 import {feedListApi} from '../../api';
 
 const Home = () => {
+  const [feedList, setFeedList] = useState([]);
   useEffect(() => {
-    //loadFeedList();
+    loadFeedList();
   }, []);
 
   // 피드리스트 api
@@ -18,7 +19,7 @@ const Home = () => {
         pageSize: 10,
       };
       const res = await feedListApi(param);
-      console.log(res);
+      console.log(res.data.content);
     } catch (e) {
       console.log(e.response);
     }

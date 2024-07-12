@@ -11,10 +11,6 @@ const BottomTab = ({navigation, state}) => {
   const moveTab = name => {
     navigation.navigate(name);
   };
-  useEffect(() => {
-    console.log(state.index);
-    console.log(state.routes[state.index - 1]);
-  }, [state]);
 
   return (
     <View style={styles.container}>

@@ -28,8 +28,8 @@ const Splash = ({navigation}) => {
     if (now < expire) {
       navigation.navigate('Login');
     } else {
-      //setCookie(storageCookie);
-      navigation.navigate('Home');
+      setCookie(storageCookie);
+      navigation.navigate('MainTabs');
     }
   };
 
