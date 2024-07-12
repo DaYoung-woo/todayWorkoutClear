@@ -2,7 +2,7 @@ import React from 'react';
 import 'react-native-gesture-handler';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {NavigationContainer} from '@react-navigation/native';
+
 import Home from './pages/mainTabs/Home';
 import Login from './pages/Login';
 import Splash from './pages/Splash';

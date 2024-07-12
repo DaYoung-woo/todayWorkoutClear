@@ -4,6 +4,7 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import ChatSvg from '../../assets/icons/chat.svg';
 import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
 import {feedListApi} from '../../api';
+import NoFeedSvg from '../../assets/icons/noFeed.svg';
 
 const Home = () => {
   const [feedList, setFeedList] = useState([]);
@@ -28,48 +29,56 @@ const Home = () => {
   return (
     <SafeAreaView style={styles.homeContainer}>
       <ScrollView>
-        {/* TopBar */}
-        <View style={styles.topBar}>
-          {/* left 로고 영역 */}
-          <View style={styles.logoContainer}>
-            <Image
-              source={require('../../assets/icons/arm.png')}
-              style={styles.logoImage}
-              resizeMode="contain"
-            />
-            <Text style={styles.logoText}>오운완</Text>
-          </View>
-          {/* right 메시지 아이콘 */}
-          <TouchableOpacity>
-            <ChatSvg width={28} height={28} color={'#3e3e3e'} />
-          </TouchableOpacity>
-        </View>
-
-        {/* 사용자 스토리 리스트 영역 */}
-        <View style={styles.storyContainer}>
-          <View style={styles.storyItem}>
-            <Image
-              source={require('../../assets/images/basicUser.png')}
-              style={styles.storyItemImage}
-            />
-            <Text style={styles.storyItemText}>iamwooda0</Text>
-            <View />
-          </View>
-          <View style={styles.storyItem}>
-            <Image
-              source={require('../../assets/images/basicUser.png')}
-              style={styles.storyItemImage}
-            />
-            <Text style={styles.storyItemText} numberOfLines={1}>
-              iamwooda
-            </Text>
-            <View />
-          </View>
-        </View>
-
-        {/* 사용자 피드 리스트 영역 */}
         <View>
-          <Text>sdf</Text>
+          {/* TopBar */}
+          <View style={styles.topBar}>
+            {/* left 로고 영역 */}
+            <View style={styles.logoContainer}>
+              <Image
+                source={require('../../assets/icons/arm.png')}
+                style={styles.logoImage}
+                resizeMode="contain"
+              />
+              <Text style={styles.logoText}>오운완</Text>
+            </View>
+            {/* right 메시지 아이콘 */}
+            <TouchableOpacity>
+              <ChatSvg width={28} height={28} color={'#3e3e3e'} />
+            </TouchableOpacity>
+          </View>
+
+          {/* 사용자 스토리 리스트 영역 */}
+          <View style={styles.storyContainer}>
+            <View style={styles.storyItem}>
+              <Image
+                source={require('../../assets/images/basicUser.png')}
+                style={styles.storyItemImage}
+              />
+              <Text style={styles.storyItemText}>iamwooda0</Text>
+              <View />
+            </View>
+            <View style={styles.storyItem}>
+              <Image
+                source={require('../../assets/images/basicUser.png')}
+                style={styles.storyItemImage}
+              />
+              <Text style={styles.storyItemText} numberOfLines={1}>
+                iamwooda
+              </Text>
+              <View />
+            </View>
+          </View>
+
+          {/* 사용자 피드 리스트 영역 */}
+          <View style={styles.feedArea}>
+            <NoFeedSvg
+              style={styles.noFeedIcon}
+              color="#555"
+              width={48}
+              height={48}
+            />
+            <Text style={styles.noFeedText}>게시물이 존재하지 않습니다.</Text>
+          </View>
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -81,6 +90,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 8,
     color: '#555',
     flex: 1,
+    backgroundColor: '#fff',
   },
   topBar: {
     flexDirection: 'row',
@@ -124,6 +134,20 @@ const styles = StyleSheet.create({
     fontFamily: 'NanumPenScript-Regular',
     fontWeight: 'thin',
     fontSize: 12,
+  },
+  feedArea: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: '100%',
+  },
+  noFeedIcon: {
+    marginBottom: 8,
+  },
+  noFeedText: {
+    fontFamily: 'NanumPenScript-Regular',
+    fontWeight: 'semibold',
+    fontSize: 16,
+    color: '#555',
   },
 });
 

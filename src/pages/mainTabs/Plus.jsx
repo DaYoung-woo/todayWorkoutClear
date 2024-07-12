@@ -110,7 +110,9 @@ const Plus = ({navigation, state}) => {
 
 const styles = StyleSheet.create({
   container: {
+    backgroundColor: '#fff',
     paddingVertical: 24,
+    flex: 1,
   },
   titleArea: {
     flexDirection: 'row',
