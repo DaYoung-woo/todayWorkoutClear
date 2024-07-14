@@ -55,7 +55,7 @@ const FeeListExist = ({feedList}) => {
   );
 };
 
-const Account = () => {
+const Account = ({navigation}) => {
   const [accountInfo, setAccountInfo] = useState({});
   const [feedList, setFeedList] = useState([]);
 
@@ -103,18 +103,22 @@ const Account = () => {
               <Text style={styles.accountInfoItemCount}>{feedList.length}</Text>
               <Text style={styles.accountInfoItemLabel}>피드</Text>
             </View>
-            <View style={styles.accountInfoItem}>
-              <Text style={styles.accountInfoItemCount}>
-                {accountInfo.followingCount}
-              </Text>
-              <Text style={styles.accountInfoItemLabel}>팔로잉</Text>
-            </View>
-            <View style={styles.accountInfoItem}>
-              <Text style={styles.accountInfoItemCount}>
-                {accountInfo.followerCount}
-              </Text>
-              <Text style={styles.accountInfoItemLabel}>팔로워</Text>
-            </View>
+            <TouchableOpacity onPress={() => navigation.navigate('Follow')}>
+              <View style={styles.accountInfoItem}>
+                <Text style={styles.accountInfoItemCount}>
+                  {accountInfo.followingCount}
+                </Text>
+                <Text style={styles.accountInfoItemLabel}>팔로잉</Text>
+              </View>
+            </TouchableOpacity>
+            <TouchableOpacity>
+              <View style={styles.accountInfoItem}>
+                <Text style={styles.accountInfoItemCount}>
+                  {accountInfo.followerCount}
+                </Text>
+                <Text style={styles.accountInfoItemLabel}>팔로워</Text>
+              </View>
+            </TouchableOpacity>
           </View>
         </View>
 

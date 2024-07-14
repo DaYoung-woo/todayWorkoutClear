@@ -144,7 +144,7 @@ const styles = StyleSheet.create({
     marginTop: -4,
   },
   logoText: {
-    fontFamily: 'JalnanGothicTTF',
+    fontFamily: 'GmarketSansBold',
     fontSize: 20,
     color: '#2E8CF4',
   },

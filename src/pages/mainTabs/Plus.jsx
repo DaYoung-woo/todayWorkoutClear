@@ -10,8 +10,9 @@ import {
 } from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import CameraSvg from '../../assets/icons/camera.svg';
-import {CameraRoll} from '@react-native-camera-roll/camera-roll';
+import ImagePicker from 'react-native-image-crop-picker';
 import {addFeedListApi} from '../../api';
+import * as RNFS from 'react-native-fs';
 
 const Plus = ({navigation, state}) => {
   const [content, setContent] = useState('');
@@ -20,11 +21,20 @@ const Plus = ({navigation, state}) => {
   // 이미지 선택
   const selectImage = async () => {
     try {
-      const {edges, page_info} = await CameraRoll.getPhotos({
-        limited: 5,
-        assetType: 'Photos',
+      const res = await ImagePicker.openPicker({
+        mediaType: 'photo',
+        multiple: true,
+        maxFiles: 5 - imageList.length,
       });
-      console.log(edges);
+
+      const images = [...imageList];
+      res.forEach(el => {
+        images.push({
+          id: Math.random(),
+          image: el,
+        });
+      });
+      setImageList(images);
     } catch (e) {
       console.log(e);
     }
@@ -50,26 +60,27 @@ const Plus = ({navigation, state}) => {
 
   // 게시글 생성 api 요청
   const saveFeed = async () => {
-    const formData = new FormData();
-    const feedRequest = JSON.stringify({
-      content,
-      tag: extractHashtags(content),
-    });
-
-    formData.append('feedRequest', feedRequest);
-
-    imageList.forEach(el => {
-      const image = {
-        //uri: Platform.OS === 'ios' ? `file:///${image.path}` : image.path,
-        uri: `file:///${el.image.path}`,
-        type: 'multipart/form-data',
-        name: el.image.filename || el.image.path.split('/').pop(),
-      };
-      formData.append('image', image);
-    });
-
     try {
+      const formData = new FormData();
+      const feedRequest = JSON.stringify({
+        content,
+        tag: extractHashtags(content),
+      });
+
+      formData.append('feedRequest', feedRequest);
+
+      imageList.forEach(el => {
+        const image = {
+          uri: el.image.path,
+          type: el.image.mime,
+          name: JSON.stringify(el.id).split('.')[1],
+        };
+
+        formData.append('image', image);
+      });
+
       const res = await addFeedListApi(formData);
+
       console.log(res);
     } catch (e) {
       console.log(e);
@@ -194,6 +205,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   disalbledBtn: {
+    fontFamily: 'GmarketSansTTFMedium',
     color: '#555',
     fontSize: 16,
   },

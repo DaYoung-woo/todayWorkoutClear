@@ -30,7 +30,7 @@ const Login = ({navigation}) => {
       const res = await loginApi(param); //instance.post('/auth', params);
       // 쿠키 저장 후 홈화면으로 이동
       saveCookieStorage(res);
-      navigation.navigate('MainTabs');
+      navigation.navigate('Main');
     } catch (e) {
       const text = e?.response?.data?.message || '에러가 발생했습니다.';
       Toast.show({

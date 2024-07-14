@@ -4,7 +4,6 @@ import axios from 'axios';
 // http://13.209.27.220:8080/swagger-ui/index.html#/auth-controller/login
 const instance = axios.create({
   baseURL: 'http://13.209.27.220:8080',
-  timeout: 7000,
   headers: {
     'Content-type': 'Application/json',
     Accept: 'Application/json',
@@ -40,20 +39,23 @@ export const feedListApi = params => {
   return instance.get(`/feed${makeQueryString(params)}`);
 };
 
-let config = {
-  headers: {
-    'Content-Type': 'multipart/form-data;charset=utf-8',
-    Accept: 'application/json',
-  },
-};
+instance.interceptors.request.use(async conf => {
+  console.log(conf.headers);
+  console.log(conf.data);
+  console.log(conf.body);
+  return conf;
+});
+
 // 피드 추가 api
 export const addFeedListApi = params => {
-  return instance.post('/feed', params, config);
+  return instance.post('/feed', params, {
+    headers: {'content-type': 'multipart/form-data'},
+    transformRequest: formData => formData,
+  });
 };
 
 // 내정보 api
 export const getAccountInfoApi = () => {
-  console.log(instance);
   return instance.get('/accounts/info');
 };
 

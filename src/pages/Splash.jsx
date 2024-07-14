@@ -29,7 +29,7 @@ const Splash = ({navigation}) => {
       navigation.navigate('Login');
     } else {
       setCookie(storageCookie);
-      navigation.navigate('MainTabs');
+      navigation.navigate('Main');
     }
   };
 
@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
     marginTop: -16,
   },
   logoText: {
-    fontFamily: 'JalnanGothicTTF',
+    fontFamily: 'GmarketSansBold',
     fontSize: 40,
     color: '#2E8CF4',
   },
