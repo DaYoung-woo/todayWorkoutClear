@@ -16,6 +16,7 @@ import Plus from './pages/mainTabs/Plus';
 import Account from './pages/mainTabs/Account';
 import Follower from './pages/follow/Follower.jsx';
 import Follwing from './pages/follow/Follwing.jsx';
+import Mypage from './pages/Mypage.jsx';
 
 const Stack = createNativeStackNavigator();
 const TabBottom = createBottomTabNavigator();
@@ -106,7 +107,24 @@ const Router = () => {
         options={{headerShown: false}}
       />
 
-      <Stack.Screen name="Follow" component={FollowTab} />
+      <Stack.Screen
+        name="Follow"
+        component={FollowTab}
+        options={{
+          header: basicHeader,
+          title: '팔로우 리스트',
+          back: true,
+        }}
+      />
+      <Stack.Screen
+        name="Mypage"
+        component={Mypage}
+        options={{
+          header: basicHeader,
+          title: '내정보',
+          back: true,
+        }}
+      />
     </Stack.Navigator>
   );
 };

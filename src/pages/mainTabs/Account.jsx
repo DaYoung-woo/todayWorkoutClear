@@ -86,16 +86,18 @@ const Account = ({navigation}) => {
         {/* 사용자 정보 */}
         <View style={styles.profile}>
           {/* 사용자 프로필 */}
-          <View style={{textAlign: 'center'}}>
-            <Image
-              source={
-                accountInfo?.profileImagePath ||
-                require('../../assets/images/basicUser.png')
-              }
-              style={styles.profileImage}
-            />
-            <Text style={styles.nickName}>{accountInfo.nickName}</Text>
-          </View>
+          <TouchableOpacity onPress={() => navigation.navigate('Mypage')}>
+            <View style={{textAlign: 'center'}}>
+              <Image
+                source={
+                  accountInfo?.profileImagePath ||
+                  require('../../assets/images/basicUser.png')
+                }
+                style={styles.profileImage}
+              />
+              <Text style={styles.nickName}>{accountInfo.nickName}</Text>
+            </View>
+          </TouchableOpacity>
 
           {/* 피드, 팔로우, 팔로워 */}
           <View style={styles.accountInfoContainer}>
@@ -111,7 +113,7 @@ const Account = ({navigation}) => {
                 <Text style={styles.accountInfoItemLabel}>팔로잉</Text>
               </View>
             </TouchableOpacity>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => navigation.navigate('Follow')}>
               <View style={styles.accountInfoItem}>
                 <Text style={styles.accountInfoItemCount}>
                   {accountInfo.followerCount}
@@ -124,7 +126,7 @@ const Account = ({navigation}) => {
 
         {/* 자기소개 */}
         <View style={styles.introduceContainer}>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => navigation.navigate('Mypage')}>
             <Text style={styles.noIntroduce}>
               {accountInfo.introduce ||
                 '아직 소개글이 없네요. 자신을 표현해보세요!'}
