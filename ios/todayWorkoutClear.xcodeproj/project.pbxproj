@@ -15,6 +15,7 @@
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		1C1A4FE0BFBD4383AB70744E /* GmarketSansTTFMedium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BE4B69B3988244B9B9E3CBC3 /* GmarketSansTTFMedium.ttf */; };
+		3DBB3E57F5BE4591B64D09C3 /* GmarketSansBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 25C517ED8F6B40B8B295AADC /* GmarketSansBold.otf */; };
 		53E2B5C482244D4EA50DEFE2 /* JalnanGothicTTF.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 465E0FD9B8E74CC987E5D5C2 /* JalnanGothicTTF.ttf */; };
 		7699B88040F8A987B510C191 /* libPods-todayWorkoutClear-todayWorkoutClearTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 19F6CBCC0A4E27FBF8BF4A61 /* libPods-todayWorkoutClear-todayWorkoutClearTests.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
@@ -45,6 +46,7 @@
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = todayWorkoutClear/main.m; sourceTree = "<group>"; };
 		13B07FB81A68108700A75B9A /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = PrivacyInfo.xcprivacy; path = todayWorkoutClear/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		19F6CBCC0A4E27FBF8BF4A61 /* libPods-todayWorkoutClear-todayWorkoutClearTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-todayWorkoutClear-todayWorkoutClearTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		25C517ED8F6B40B8B295AADC /* GmarketSansBold.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = GmarketSansBold.otf; path = ../src/assets/fonts/GmarketSansBold.otf; sourceTree = "<group>"; };
 		3B4392A12AC88292D35C810B /* Pods-todayWorkoutClear.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-todayWorkoutClear.debug.xcconfig"; path = "Target Support Files/Pods-todayWorkoutClear/Pods-todayWorkoutClear.debug.xcconfig"; sourceTree = "<group>"; };
 		465E0FD9B8E74CC987E5D5C2 /* JalnanGothicTTF.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = JalnanGothicTTF.ttf; path = ../src/assets/fonts/JalnanGothicTTF.ttf; sourceTree = "<group>"; };
 		5709B34CF0A7D63546082F79 /* Pods-todayWorkoutClear.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-todayWorkoutClear.release.xcconfig"; path = "Target Support Files/Pods-todayWorkoutClear/Pods-todayWorkoutClear.release.xcconfig"; sourceTree = "<group>"; };
@@ -132,6 +134,7 @@
 				9418770E52034FB4B00F1EE0 /* NotoSansKR-VariableFont_wght.ttf */,
 				465E0FD9B8E74CC987E5D5C2 /* JalnanGothicTTF.ttf */,
 				BE4B69B3988244B9B9E3CBC3 /* GmarketSansTTFMedium.ttf */,
+				25C517ED8F6B40B8B295AADC /* GmarketSansBold.otf */,
 			);
 			name = Resources;
 			path = "";
@@ -282,6 +285,7 @@
 				0897B4BA95384392B57C7255 /* NotoSansKR-VariableFont_wght.ttf in Resources */,
 				53E2B5C482244D4EA50DEFE2 /* JalnanGothicTTF.ttf in Resources */,
 				1C1A4FE0BFBD4383AB70744E /* GmarketSansTTFMedium.ttf in Resources */,
+				3DBB3E57F5BE4591B64D09C3 /* GmarketSansBold.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

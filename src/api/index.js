@@ -21,6 +21,7 @@ const makeQueryString = obj => {
 
 // header 쿠키 세팅
 export const setCookie = cookie => {
+  cookie.split('=')[1];
   instance.defaults.headers.Cookies = cookie;
 };
 
@@ -36,11 +37,27 @@ export const registApi = params => {
 
 // 피드 리스트 api
 export const feedListApi = params => {
-  console.log(instance.defaults.headers.Cookies);
   return instance.get(`/feed${makeQueryString(params)}`);
 };
 
+let config = {
+  headers: {
+    'Content-Type': 'multipart/form-data;charset=utf-8',
+    Accept: 'application/json',
+  },
+};
 // 피드 추가 api
-export const addFeedList = params => {
-  return instance.post('/feed', params);
+export const addFeedListApi = params => {
+  return instance.post('/feed', params, config);
+};
+
+// 내정보 api
+export const getAccountInfoApi = () => {
+  console.log(instance);
+  return instance.get('/accounts/info');
+};
+
+// 마이페이지 api
+export const accountInfoDetail = () => {
+  return instance.get('/accounts/info/mypage');
 };

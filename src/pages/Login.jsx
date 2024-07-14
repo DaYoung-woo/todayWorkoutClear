@@ -30,7 +30,7 @@ const Login = ({navigation}) => {
       const res = await loginApi(param); //instance.post('/auth', params);
       // 쿠키 저장 후 홈화면으로 이동
       saveCookieStorage(res);
-      navigation.navigate('MainTab');
+      navigation.navigate('MainTabs');
     } catch (e) {
       const text = e?.response?.data?.message || '에러가 발생했습니다.';
       Toast.show({
@@ -43,7 +43,7 @@ const Login = ({navigation}) => {
   const saveCookieStorage = async res => {
     const [cookie] = res.headers['set-cookie'];
     const stringCookie = JSON.stringify(cookie);
-    //setCookie(stringCookie);
+    setCookie(stringCookie);
 
     try {
       await AsyncStorage.setItem('cookie', stringCookie);

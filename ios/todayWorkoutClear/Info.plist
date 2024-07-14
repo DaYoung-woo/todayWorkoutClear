@@ -63,6 +63,7 @@
 		<string>NotoSansKR-VariableFont_wght.ttf</string>
 		<string>JalnanGothicTTF.ttf</string>
 		<string>GmarketSansTTFMedium.ttf</string>
+		<string>GmarketSansBold.otf</string>
 	</array>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Allow access to your photo gallery</string>

@@ -10,13 +10,14 @@ import Router from './src/router';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import {NavigationContainer} from '@react-navigation/native';
 import Toast from 'react-native-toast-message';
+import {ToastConfig} from './src/components/Toast';
 
-function App(): React.JSX.Element {
+function App() {
   return (
     <GestureHandlerRootView>
       <NavigationContainer>
         <Router />
-        <Toast />
+        <Toast config={ToastConfig} position="bottom" bottomOffset={80} />
       </NavigationContainer>
     </GestureHandlerRootView>
   );
