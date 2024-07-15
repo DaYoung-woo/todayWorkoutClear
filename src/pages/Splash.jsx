@@ -29,7 +29,7 @@ const Splash = ({navigation}) => {
       navigation.navigate('Login');
     } else {
       setCookie(storageCookie);
-      navigation.navigate('Main');
+      navigation.navigate('Main', {load: true});
     }
   };
 

@@ -235,15 +235,14 @@ const styles = StyleSheet.create({
   },
   item: {
     flex: 1,
-    margin: 1,
     height: imageSize,
     width: imageSize,
-    borderWidth: 0.5,
-    borderColor: '#ddd',
   },
   image: {
-    width: '100%',
-    height: '100%',
+    width: imageSize,
+    height: imageSize,
+    borderWidth: 0.5,
+    borderColor: '#ddd',
   },
 });
 export default Account;

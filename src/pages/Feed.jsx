@@ -249,7 +249,7 @@ const Feed = ({route}) => {
 
           {/* 댓글이 있는 경우 */}
           {feed.replys.map(el => (
-            <View style={styles.commentItem}>
+            <View style={styles.commentItem} key={el.nickname + el.reply}>
               <Text style={styles.commentNickname}>{el.nickname}</Text>
               <Text style={styles.commentText}>{el.reply}</Text>
             </View>

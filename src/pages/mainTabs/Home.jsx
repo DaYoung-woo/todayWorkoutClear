@@ -12,13 +12,14 @@ import EmotionGoodSvg from '../../assets/icons/emoticonGood.svg';
 
 const screenWidth = Dimensions.get('window').width;
 
-const Home = ({navigation}) => {
+const Home = ({navigation, route}) => {
   const [feedList, setFeedList] = useState([]);
+  const params = route.params;
 
   useEffect(() => {
     loadAccountInfo();
     loadFeedList();
-  }, []);
+  }, [params]);
 
   // 사용자 정보 api
   const loadAccountInfo = async () => {

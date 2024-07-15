@@ -76,3 +76,8 @@ export const updateFeedEmotion = (feedId, emotionType) => {
 export const addCommentApi = (feedId, reply) => {
   return instance.post(`/feed/${feedId}/reply`, {reply});
 };
+
+// 피드 태그 검색
+export const searchFeedApi = param => {
+  return instance.get(`/feed/search${makeQueryString(param)}`);
+};
