@@ -61,7 +61,8 @@ const Home = ({navigation}) => {
   };
 
   // 내정보 페이지로 이동
-  const moveAccount = () => {
+  const clickProfile = email => {
+    //if(email === )
     navigation.navigate('Account');
   };
 
@@ -109,7 +110,7 @@ const Home = ({navigation}) => {
               {/* 피드 작성자 정보 */}
               <TouchableOpacity
                 style={styles.profileArea}
-                onPress={moveAccount}>
+                onPress={() => clickProfile(el.email)}>
                 <Image
                   source={require('../../assets/images/basicUser.png')}
                   style={styles.profileImage}

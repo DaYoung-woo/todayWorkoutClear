@@ -66,3 +66,13 @@ export const updateAccountInfo = params => {
 export const getFeedDetail = id => {
   return instance.get(`/feed/${id}`);
 };
+
+// 감정 표현 api
+export const updateFeedEmotion = (feedId, emotionType) => {
+  return instance.post(`/feed/${feedId}/emotion?emotionType=${emotionType}`);
+};
+
+// 댓글 작성
+export const addCommentApi = (feedId, reply) => {
+  return instance.post(`/feed/${feedId}/reply`, {reply});
+};
