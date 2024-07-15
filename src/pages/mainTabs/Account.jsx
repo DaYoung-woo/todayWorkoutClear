@@ -33,24 +33,37 @@ const FeedListEmpty = () => {
   );
 };
 
+// 피드 정렬을 위한 row 세팅
+const renderRow = (rowData, rowIndex) => (
+  <View key={rowIndex} style={styles.row}>
+    {rowData.map(item => (
+      <View key={item.id} style={styles.item}>
+        <Image
+          source={{uri: `http://13.209.27.220:8080${item.images[0]}`}}
+          style={styles.image}
+        />
+      </View>
+    ))}
+  </View>
+);
+
+// 피드 정렬을 위한 column 세팅
+const groupPhotosInRows = (photos, numColumns) => {
+  const rows = [];
+  for (let i = 0; i < photos.length; i += numColumns) {
+    rows.push(photos.slice(i, i + numColumns));
+  }
+  return rows;
+};
+
+//피드 리스트가 존재하는 경우
 const FeeListExist = ({feedList}) => {
-  feedList.forEach(element => {
-    console.log(element.images[0]);
-  });
+  const rows = groupPhotosInRows(feedList, numColumns);
   return (
     <View style={styles.feedListContainer}>
-      <View style={styles.row}>
-        {feedList.map(item => {
-          return (
-            <View key={item.id}>
-              <Image
-                source={{uri: `http://13.209.27.220:8080${item.images[0]}`}}
-                style={styles.image}
-              />
-            </View>
-          );
-        })}
-      </View>
+      {rows.map((item, idx) => {
+        return renderRow(item, idx);
+      })}
     </View>
   );
 };
@@ -95,7 +108,6 @@ const Account = ({navigation}) => {
                 }
                 style={styles.profileImage}
               />
-              <Text style={styles.nickName}>{accountInfo.nickName}</Text>
             </View>
           </TouchableOpacity>
 
@@ -126,6 +138,7 @@ const Account = ({navigation}) => {
 
         {/* 자기소개 */}
         <View style={styles.introduceContainer}>
+          <Text style={styles.nickName}>{accountInfo.nickName}</Text>
           <TouchableOpacity onPress={() => navigation.navigate('Mypage')}>
             <Text style={styles.noIntroduce}>
               {accountInfo.introduce ||
@@ -136,7 +149,9 @@ const Account = ({navigation}) => {
 
         {/* 피드 리스트 */}
         {feedList.length ? (
-          <FeeListExist feedList={feedList} />
+          <View style={{flex: 1}}>
+            <FeeListExist feedList={feedList} />
+          </View>
         ) : (
           <FeedListEmpty />
         )}
@@ -159,8 +174,8 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   profileImage: {
-    width: 80,
-    height: 80,
+    width: 88,
+    height: 88,
   },
   profile: {flexDirection: 'row', paddingHorizontal: 16},
   accountInfoContainer: {
@@ -182,9 +197,8 @@ const styles = StyleSheet.create({
     color: '#555',
   },
   nickName: {
-    paddingTop: 8,
+    paddingVertical: 8,
     fontFamily: 'GmarketSansTTFMedium',
-    textAlign: 'center',
   },
   feedListEmpty: {
     flex: 1,
@@ -208,14 +222,12 @@ const styles = StyleSheet.create({
     fontFamily: 'GmarketSansTTFMedium',
     color: '#999',
   },
-  image: {
-    width: imageSize,
-    height: imageSize,
-    borderWidth: 0.5,
-    borderColor: '#ddd',
-  },
+
   feedListContainer: {
     marginTop: 16,
+    flex: 1,
+  },
+  column: {
     flexDirection: 'column',
   },
   row: {
@@ -226,6 +238,12 @@ const styles = StyleSheet.create({
     margin: 1,
     height: imageSize,
     width: imageSize,
+    borderWidth: 0.5,
+    borderColor: '#ddd',
+  },
+  image: {
+    width: '100%',
+    height: '100%',
   },
 });
 export default Account;

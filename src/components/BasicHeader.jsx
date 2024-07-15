@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 16,
     paddingVertical: 16,
-    fontFamily: 'NotoSansKR-VariableFont_wght',
+    fontFamily: 'GmarketSansTTFMedium',
     color: '#555',
   },
   leftArea: {

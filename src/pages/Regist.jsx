@@ -144,7 +144,7 @@ const Regist = ({navigation}) => {
 
       {/* 닉네임 */}
       <View style={styles.wrapper}>
-        <Text style={styles.textInputLabel}>이메일</Text>
+        <Text style={styles.textInputLabel}>닉네임</Text>
         <TextInput
           onChangeText={nickname => setForm({...form, nickname})}
           value={form.nickname}

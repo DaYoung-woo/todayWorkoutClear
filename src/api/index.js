@@ -39,13 +39,6 @@ export const feedListApi = params => {
   return instance.get(`/feed${makeQueryString(params)}`);
 };
 
-instance.interceptors.request.use(async conf => {
-  console.log(conf.headers);
-  console.log(conf.data);
-  console.log(conf.body);
-  return conf;
-});
-
 // 피드 추가 api
 export const addFeedListApi = params => {
   return instance.post('/feed', params, {
@@ -62,4 +55,14 @@ export const getAccountInfoApi = () => {
 // 마이페이지 api
 export const accountInfoDetail = () => {
   return instance.get('/accounts/info/mypage');
+};
+
+// 내정보 수정 api
+export const updateAccountInfo = params => {
+  return instance.patch('/accounts', params);
+};
+
+// 피드 상세 api
+export const getFeedDetail = id => {
+  return instance.get(`/feed/${id}`);
 };

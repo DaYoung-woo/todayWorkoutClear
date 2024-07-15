@@ -10,14 +10,14 @@ export const regist = StyleSheet.create({
     paddingBottom: 12,
   },
   textInputLabel: {
-    fontFamily: 'NotoSansKR-VariableFont_wght',
+    fontFamily: 'GmarketSansTTFMedium',
     paddingBottom: 12,
     fontWeight: '600',
     fontSize: 16,
     color: '#555',
   },
   textInput: {
-    fontFamily: 'NotoSansKR-VariableFont_wght',
+    fontFamily: 'GmarketSansTTFMedium',
     borderWidth: 1,
     width: '100%',
     padding: 12,
@@ -39,7 +39,7 @@ export const regist = StyleSheet.create({
     marginTop: 20,
   },
   registBtnText: {
-    fontFamily: 'NotoSansKR-VariableFont_wght',
+    fontFamily: 'GmarketSansTTFMedium',
     fontSize: 16,
     fontWeight: 'bold',
     color: '#fff',
@@ -54,7 +54,6 @@ export const login = StyleSheet.create({
   wrapper: {
     paddingHorizontal: 16,
     paddingTop: 8,
-    paddingBottom: 16,
   },
   logoArea: {
     marginTop: 40,
@@ -74,14 +73,14 @@ export const login = StyleSheet.create({
     color: '#2E8CF4',
   },
   textInputLabel: {
-    fontFamily: 'NotoSansKR-VariableFont_wght',
+    fontFamily: 'GmarketSansTTFMedium',
     paddingBottom: 12,
     fontWeight: '600',
     fontSize: 16,
     color: '#555',
   },
   textInput: {
-    fontFamily: 'NotoSansKR-VariableFont_wght',
+    fontFamily: 'GmarketSansTTFMedium',
     borderWidth: 1,
     width: '100%',
     padding: 12,
@@ -103,7 +102,7 @@ export const login = StyleSheet.create({
     marginTop: 12,
   },
   loginBtnText: {
-    fontFamily: 'NotoSansKR-VariableFont_wght',
+    fontFamily: 'GmarketSansTTFMedium',
     fontSize: 16,
     fontWeight: 'bold',
 

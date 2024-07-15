@@ -12,6 +12,7 @@ const Login = ({navigation}) => {
   const [password, setPassword] = useState('');
   const [submit, setSumbit] = useState(false);
 
+  // 로그인 버튼 클릭 이벤트
   const sumbitForm = () => {
     setSumbit(true);
     if (!email.length || !password.length) {
@@ -21,6 +22,7 @@ const Login = ({navigation}) => {
     loginUser();
   };
 
+  // 로그인 api 요청
   const loginUser = async () => {
     try {
       const param = {
@@ -40,6 +42,7 @@ const Login = ({navigation}) => {
     }
   };
 
+  // 쿠키 저장
   const saveCookieStorage = async res => {
     const [cookie] = res.headers['set-cookie'];
     const stringCookie = JSON.stringify(cookie);

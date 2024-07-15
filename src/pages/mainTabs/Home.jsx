@@ -1,13 +1,16 @@
 import React, {useEffect, useState} from 'react';
-import {Image, StyleSheet, Text, View} from 'react-native';
+import {Image, StyleSheet, Text, View, Dimensions} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import ChatSvg from '../../assets/icons/chat.svg';
-
 import {feedListApi, getAccountInfoApi} from '../../api';
-import NoFeedSvg from '../../assets/icons/noFeed.svg';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import Toast from 'react-native-toast-message';
+import ChatSvg from '../../assets/icons/chat.svg';
+import FeedChatSvg from '../../assets/icons/feedChat.svg';
+import NoFeedSvg from '../../assets/icons/noFeed.svg';
+import EmotionGoodSvg from '../../assets/icons/emoticonGood.svg';
+
+const screenWidth = Dimensions.get('window').width;
 
 const Home = ({navigation}) => {
   const [feedList, setFeedList] = useState([]);
@@ -57,6 +60,11 @@ const Home = ({navigation}) => {
     }
   };
 
+  // 내정보 페이지로 이동
+  const moveAccount = () => {
+    navigation.navigate('Account');
+  };
+
   return (
     <SafeAreaView style={styles.homeContainer}>
       <ScrollView
@@ -79,40 +87,64 @@ const Home = ({navigation}) => {
           </TouchableOpacity>
         </View>
 
-        {/* 사용자 스토리 리스트 영역 */}
-        {/* <View style={styles.storyContainer}>
-            <View style={styles.storyItem}>
-              <Image
-                source={require('../../assets/images/basicUser.png')}
-                style={styles.storyItemImage}
-              />
-              <Text style={styles.storyItemText}>iamwooda0</Text>
-              <View />
-            </View>
-            <View style={styles.storyItem}>
-              <Image
-                source={require('../../assets/images/basicUser.png')}
-                style={styles.storyItemImage}
-              />
-              <Text style={styles.storyItemText} numberOfLines={1}>
-                iamwooda
-              </Text>
-              <View />
-            </View>
-          </View> */}
-
         {/* 사용자 피드 리스트 영역 */}
-        <View style={styles.feedArea}>
-          <NoFeedSvg
-            style={styles.noFeedIcon}
-            color="#ddd"
-            width={42}
-            height={48}
-          />
-          <Text style={styles.noFeedText}>
-            {'피드가 비어 있습니다. \n팔로우할 친구를 찾아보세요!'}
-          </Text>
-        </View>
+
+        {!feedList.length && (
+          <View style={styles.feedArea}>
+            <NoFeedSvg
+              style={styles.noFeedIcon}
+              color="#ddd"
+              width={42}
+              height={48}
+            />
+            <Text style={styles.noFeedText}>
+              {'피드가 비어 있습니다. \n팔로우할 친구를 찾아보세요!'}
+            </Text>
+          </View>
+        )}
+
+        {!!feedList.length &&
+          feedList.map(el => (
+            <View key={el.id}>
+              {/* 피드 작성자 정보 */}
+              <TouchableOpacity
+                style={styles.profileArea}
+                onPress={moveAccount}>
+                <Image
+                  source={require('../../assets/images/basicUser.png')}
+                  style={styles.profileImage}
+                />
+
+                <Text style={styles.profileNickname}>{el.nickname}</Text>
+              </TouchableOpacity>
+
+              {/* 피드 사진 */}
+              <TouchableOpacity
+                onPress={() => navigation.navigate('Feed', {id: el.id})}>
+                <Image
+                  source={{uri: `http://13.209.27.220:8080${el.images[0]}`}}
+                  style={styles.thumbImage}
+                />
+
+                {/* 피드 아이콘 영역 */}
+                <View style={styles.iconArea}>
+                  <FeedChatSvg color="#555" width={24} height={24} />
+                  <Text style={styles.comment}>댓글 {el.replys.length}개</Text>
+                  <EmotionGoodSvg color="#555" width={24} height={24} />
+                  <Text style={styles.comment}>
+                    감정 표현 {el.emotions.total}개
+                  </Text>
+                </View>
+
+                {/* 피드 컨텐츠 영역 */}
+                <View>
+                  <Text style={styles.feedContent} numberOfLines={1}>
+                    {el.content}
+                  </Text>
+                </View>
+              </TouchableOpacity>
+            </View>
+          ))}
       </ScrollView>
     </SafeAreaView>
   );
@@ -137,6 +169,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingVertical: 4,
     marginTop: 4,
+    paddingBottom: 8,
   },
   logoImage: {
     height: 32,
@@ -156,14 +189,31 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     width: 84,
   },
-  storyItemImage: {
-    width: 56,
-    height: 56,
+  profileArea: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    paddingBottom: 4,
+  },
+  profileImage: {
+    width: 40,
+    height: 40,
     marginBottom: 4,
     borderWidth: 1,
     borderColor: '#eee',
     borderRadius: 100,
   },
+  profileNickname: {
+    fontFamily: 'GmarketSansTTFMedium',
+    paddingLeft: 12,
+  },
+  thumbImage: {
+    width: screenWidth,
+    height: screenWidth,
+    borderWidth: 0.5,
+    borderColor: '#ddd',
+    marginLeft: -8,
+  },
+
   storyItemText: {
     fontFamily: 'GmarketSansTTFMedium',
     fontWeight: 'thin',
@@ -184,6 +234,23 @@ const styles = StyleSheet.create({
     color: '#999',
     textAlign: 'center',
     lineHeight: 20,
+  },
+  iconArea: {
+    flexDirection: 'row',
+    paddingVertical: 8,
+    alignItems: 'center',
+  },
+  feedContent: {
+    fontFamily: 'GmarketSansTTFMedium',
+    marginBottom: 32,
+    fontSize: 16,
+    lineHeight: 20,
+  },
+  comment: {
+    fontFamily: 'GmarketSansTTFMedium',
+    fontSize: 12,
+    padding: 4,
+    color: '#555',
   },
 });
 

@@ -12,7 +12,6 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import CameraSvg from '../../assets/icons/camera.svg';
 import ImagePicker from 'react-native-image-crop-picker';
 import {addFeedListApi} from '../../api';
-import * as RNFS from 'react-native-fs';
 
 const Plus = ({navigation, state}) => {
   const [content, setContent] = useState('');
@@ -141,7 +140,7 @@ const Plus = ({navigation, state}) => {
         style={styles.textarea}
         multiline={true}
         numberOfLines={10}
-        placeholder={'#태그를 활용해 피드를 작성해보세요'}
+        placeholder={'해시태그(#)를 사용하여 피드에 태그를 추가해 보세요.'}
         value={content}
         onChangeText={setContent}
       />

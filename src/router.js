@@ -17,6 +17,7 @@ import Account from './pages/mainTabs/Account';
 import Follower from './pages/follow/Follower.jsx';
 import Follwing from './pages/follow/Follwing.jsx';
 import Mypage from './pages/Mypage.jsx';
+import Feed from './pages/Feed.jsx';
 
 const Stack = createNativeStackNavigator();
 const TabBottom = createBottomTabNavigator();
@@ -122,6 +123,20 @@ const Router = () => {
         options={{
           header: basicHeader,
           title: '내정보',
+          back: true,
+        }}
+      />
+      <Stack.Screen
+        name="Account"
+        component={Account}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="Feed"
+        component={Feed}
+        options={{
+          header: basicHeader,
+          title: '',
           back: true,
         }}
       />
