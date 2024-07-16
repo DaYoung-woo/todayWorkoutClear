@@ -52,21 +52,17 @@ const TagViewRender = ({content}) => {
 
   return (
     <Text style={styles.contentContainer}>
-      {splitText.map(el => {
-        if (el.split('').includes('#')) {
-          return (
-            <Text style={styles.hashtagText} key={Math.random()}>
-              {el}
-            </Text>
-          );
-        } else {
-          return (
-            <Text style={styles.contentsText} key={Math.random()}>
-              {el}
-            </Text>
-          );
-        }
-      })}
+      {splitText.map(el =>
+        el.split('').includes('#') ? (
+          <Text style={styles.hashtagText} key={el}>
+            {el}
+          </Text>
+        ) : (
+          <Text style={styles.contentsText} key={el}>
+            {el}
+          </Text>
+        ),
+      )}
     </Text>
   );
 };
@@ -141,7 +137,7 @@ const Feed = ({route}) => {
     <ScrollView style={styles.container}>
       {/* 프로필 영역 */}
       <View style={styles.profile}>
-        {feed.profileImagePath ? (
+        {feed?.profileImagePath ? (
           <Image
             source={{uri: `http://13.209.27.220:8080${feed.profileImagePath}`}}
             style={styles.profileImage}
@@ -152,7 +148,10 @@ const Feed = ({route}) => {
             style={styles.profileImage}
           />
         )}
-        <Text style={styles.profileText}>{feed.nickname}</Text>
+        <Text style={styles.profileText}>
+          {feed.nickname}
+          {feed.profileImagePath}
+        </Text>
       </View>
 
       {/* 이미지 캐러셀 영역 */}

@@ -94,9 +94,7 @@ const Home = ({navigation, route}) => {
                   <FeedChatSvg color="#555" width={24} height={24} />
                   <Text style={styles.comment}>댓글 {el.replys.length}개</Text>
                   <EmotionGoodSvg color="#555" width={24} height={24} />
-                  <Text style={styles.comment}>
-                    감정 표현 {el.emotions.total}개
-                  </Text>
+                  <Text style={styles.comment}>감정 {el.emotions.total}개</Text>
                 </View>
 
                 {/* 피드 컨텐츠 영역 */}
@@ -154,7 +152,6 @@ const styles = StyleSheet.create({
     height: screenWidth,
     borderWidth: 0.5,
     borderColor: '#ddd',
-    marginLeft: -8,
   },
   iconArea: {
     flexDirection: 'row',
@@ -164,8 +161,9 @@ const styles = StyleSheet.create({
   feedContent: {
     fontFamily: 'GmarketSansTTFMedium',
     marginBottom: 32,
-    fontSize: 16,
+    fontSize: 14,
     lineHeight: 20,
+    color: '#555',
   },
   comment: {
     fontFamily: 'GmarketSansTTFMedium',

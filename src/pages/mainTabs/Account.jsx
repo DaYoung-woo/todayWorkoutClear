@@ -1,11 +1,12 @@
 import React, {useEffect, useState} from 'react';
-import {Image, StyleSheet, Text, View, TouchableOpacity} from 'react-native';
+import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {accountInfoDetail} from '../../api';
 import {ScrollView} from 'react-native-gesture-handler';
 import NoFeed from '../../components/common/NoFeed';
 import FeedGallery from '../../components/common/FeedGallery';
-import {getUserInfo, saveUserInfo} from '../../utils/helpers';
+import {saveUserInfo} from '../../utils/helpers';
+import Profile from '../../account/Profile';
 
 const Account = ({navigation}) => {
   const [accountInfo, setAccountInfo] = useState({});
@@ -38,51 +39,16 @@ const Account = ({navigation}) => {
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView contentContainerStyle={{flexGrow: 1}}>
-        {/* 이메일 topbar */}
-        <View style={styles.topbar}>
-          <Text style={styles.accountEmail}>{accountInfo.email}</Text>
-        </View>
+        {/* 이메일 */}
+        <Text style={styles.accountEmail}>{accountInfo.email}</Text>
 
-        {/* 사용자 정보 */}
-        <View style={styles.profile}>
-          {/* 사용자 프로필 */}
-          <TouchableOpacity onPress={() => navigation.navigate('Mypage')}>
-            <View style={{textAlign: 'center'}}>
-              <Image
-                source={
-                  {
-                    uri: `http://13.209.27.220:8080${accountInfo?.profileImagePath}`,
-                  } || require('../../assets/images/basicUser.png')
-                }
-                style={styles.profileImage}
-              />
-            </View>
-          </TouchableOpacity>
-
-          {/* 피드, 팔로우, 팔로워 */}
-          <View style={styles.accountInfoContainer}>
-            <View style={styles.accountInfoItem}>
-              <Text style={styles.accountInfoItemCount}>{feedList.length}</Text>
-              <Text style={styles.accountInfoItemLabel}>피드</Text>
-            </View>
-            <TouchableOpacity onPress={() => navigation.navigate('Follow')}>
-              <View style={styles.accountInfoItem}>
-                <Text style={styles.accountInfoItemCount}>
-                  {accountInfo.followingCount}
-                </Text>
-                <Text style={styles.accountInfoItemLabel}>팔로잉</Text>
-              </View>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={() => navigation.navigate('Follow')}>
-              <View style={styles.accountInfoItem}>
-                <Text style={styles.accountInfoItemCount}>
-                  {accountInfo.followerCount}
-                </Text>
-                <Text style={styles.accountInfoItemLabel}>팔로워</Text>
-              </View>
-            </TouchableOpacity>
-          </View>
-        </View>
+        {/* 사용자 프로필 */}
+        <Profile
+          profileImagePath={accountInfo?.profileImagePath}
+          feed={feedList.length}
+          following={accountInfo?.followingCount}
+          follower={accountInfo?.followerCount}
+        />
 
         {/* 자기소개 */}
         <View style={styles.introduceContainer}>
@@ -99,7 +65,7 @@ const Account = ({navigation}) => {
 
         {/* 피드 리스트 */}
         {feedList.length ? (
-          <View style={{flex: 1}}>
+          <View style={styles.flex}>
             <FeedGallery feedList={feedList} />
           </View>
         ) : (
@@ -115,37 +81,11 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     flex: 1,
   },
-  topbar: {
-    padding: 16,
-  },
   accountEmail: {
     fontFamily: 'GmarketSansTTFMedium',
     paddingBottom: 8,
     fontSize: 16,
-  },
-  profileImage: {
-    width: 88,
-    height: 88,
-    borderRadius: 100,
-  },
-  profile: {flexDirection: 'row', paddingHorizontal: 16},
-  accountInfoContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-around',
-    flex: 1,
-  },
-  accountInfoItemLabel: {
-    fontFamily: 'GmarketSansTTFMedium',
-    textAlign: 'center',
-    marginTop: 8,
-    color: '#999',
-  },
-  accountInfoItemCount: {
-    fontFamily: 'GmarketSansTTFMedium',
-    textAlign: 'center',
-    fontSize: 16,
-    color: '#555',
+    padding: 16,
   },
   nickName: {
     paddingVertical: 8,
@@ -159,6 +99,9 @@ const styles = StyleSheet.create({
   noIntroduce: {
     fontFamily: 'GmarketSansTTFMedium',
     color: '#999',
+  },
+  flex: {
+    flex: 1,
   },
 });
 export default Account;
