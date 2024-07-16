@@ -1,17 +1,12 @@
 import React, {useEffect, useState} from 'react';
-import {StyleSheet, View, Text} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import Toast from 'react-native-toast-message';
 import Input from '../components/common/Input';
-import {
-  getAccountInfoApi,
-  logoutApi,
-  setCookie,
-  updateAccountInfo,
-} from '../api';
+import {getAccountInfoApi, logoutApi, updateAccountInfo} from '../api';
 import {getNicknameValid} from '../utils/valid';
 import PrimaryBtn from '../components/common/PrimaryBtn';
 import Profile from '../components/mypage/Profile';
-import {saveUserInfo} from '../utils/helpers';
+import {saveUserInfo, setCookie} from '../utils/helpers';
 import TextBtn from '../components/common/TextBtn';
 
 const Mypage = ({navigation}) => {

@@ -1,11 +1,5 @@
 import React, {useState} from 'react';
-import {
-  SafeAreaView,
-  Text,
-  View,
-  TouchableOpacity,
-  StyleSheet,
-} from 'react-native';
+import {SafeAreaView, View, StyleSheet} from 'react-native';
 import {loginApi} from '../api';
 import Toast from 'react-native-toast-message';
 import {saveCookieStorage} from '../utils/helpers';

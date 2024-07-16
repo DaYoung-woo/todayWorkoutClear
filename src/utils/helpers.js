@@ -1,5 +1,15 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {setCookie} from '../api';
+import {instance} from '../api';
+
+// header 쿠키 세팅
+export const setCookie = cookie => {
+  if (cookie) {
+    cookie.split('=')[1];
+    instance.defaults.headers.Cookies = cookie;
+  } else {
+    instance.defaults.headers.Cookies = '';
+  }
+};
 
 // 쿼리 스트링 생성
 export const makeQueryString = obj => {

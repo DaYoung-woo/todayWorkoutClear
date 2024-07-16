@@ -11,16 +11,6 @@ const instance = axios.create({
   withCredentials: true,
 });
 
-// header 쿠키 세팅
-export const setCookie = cookie => {
-  if (cookie) {
-    cookie.split('=')[1];
-    instance.defaults.headers.Cookies = cookie;
-  } else {
-    instance.defaults.headers.Cookies = '';
-  }
-};
-
 // 로그인 api
 export const loginApi = params => {
   return instance.post('/auth', params);

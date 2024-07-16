@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {StyleSheet, TouchableOpacity, View} from 'react-native';
 import HomeSvg from '../assets/icons/home.svg';
 import SearchSvg from '../assets/icons/search.svg';

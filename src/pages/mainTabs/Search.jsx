@@ -19,7 +19,7 @@ const Search = ({navigation}) => {
 
   useEffect(() => {
     loadAllFeed();
-  });
+  }, []);
 
   const loadAllFeed = async () => {
     try {

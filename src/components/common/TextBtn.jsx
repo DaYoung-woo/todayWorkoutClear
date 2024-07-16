@@ -1,6 +1,5 @@
 import React from 'react';
 import {StyleSheet, TouchableOpacity, Text, View} from 'react-native';
-import {useNavigation} from '@react-navigation/native';
 
 const TextBtn = ({label, onPress}) => {
   return (
