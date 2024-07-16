@@ -7,7 +7,7 @@ import {
   Text,
 } from 'react-native';
 
-const InputWithBtn = (label, value, setValue, onPress) => {
+const InputWithBtn = ({label, value, setValue, onPress}) => {
   return (
     <View style={styles.editArea}>
       <TextInput

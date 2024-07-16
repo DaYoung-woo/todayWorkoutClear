@@ -5,8 +5,19 @@ import EmotionFunnySvg from '../../assets/icons/emoticonFunny.svg';
 import EmotionAngrySvg from '../../assets/icons/emoticonAngry.svg';
 import EmotionSadSvg from '../../assets/icons/emoticonSad.svg';
 import EmotionSurpriseSvg from '../../assets/icons/emoticonSurprise.svg';
+import {updateFeedEmotion} from '../../api';
 
-const Emotion = ({changeEmotion, emotions}) => {
+const Emotion = ({loadFeedDetail, id, emotions}) => {
+  // 피드 감정 표현 api
+  const changeEmotion = async emotionType => {
+    try {
+      await updateFeedEmotion(id, emotionType);
+      loadFeedDetail();
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   return (
     <View style={styles.emotionContainer}>
       <View style={styles.emotionWrapper}>
