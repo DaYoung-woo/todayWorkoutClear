@@ -7,7 +7,7 @@ const Profile = ({feed, following, follower, profileImagePath}) => {
   return (
     <View style={styles.profile}>
       <TouchableOpacity onPress={() => navigation.navigate('Mypage')}>
-        <View style={{textAlign: 'center'}}>
+        <View style={styles.textAlign}>
           <Image
             source={
               profileImagePath
@@ -61,6 +61,9 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: 16,
     color: '#555',
+  },
+  textAlign: {
+    textAlign: 'center',
   },
 });
 export default Profile;

@@ -1,12 +1,11 @@
 import React, {useEffect, useState} from 'react';
-import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
-import {SafeAreaView} from 'react-native-safe-area-context';
+import {StyleSheet, Text, SafeAreaView, ScrollView} from 'react-native';
 import {accountInfoDetail} from '../../api';
-import {ScrollView} from 'react-native-gesture-handler';
+import {saveUserInfo} from '../../utils/helpers';
 import NoFeed from '../../components/common/NoFeed';
 import FeedGallery from '../../components/common/FeedGallery';
-import {saveUserInfo} from '../../utils/helpers';
 import Profile from '../../account/Profile';
+import Introduce from '../../components/mypage/Introduce';
 
 const Account = ({navigation}) => {
   const [accountInfo, setAccountInfo] = useState({});
@@ -51,23 +50,14 @@ const Account = ({navigation}) => {
         />
 
         {/* 자기소개 */}
-        <View style={styles.introduceContainer}>
-          <TouchableOpacity onPress={() => navigation.navigate('Mypage')}>
-            <Text style={styles.nickName}>{accountInfo.nickName}</Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => navigation.navigate('Mypage')}>
-            <Text style={styles.noIntroduce}>
-              {accountInfo.introduce ||
-                '아직 소개글이 없네요. 자신을 표현해보세요!'}
-            </Text>
-          </TouchableOpacity>
-        </View>
+        <Introduce
+          nickName={accountInfo.nickName}
+          introduce={accountInfo.introduce}
+        />
 
         {/* 피드 리스트 */}
         {feedList.length ? (
-          <View style={styles.flex}>
-            <FeedGallery feedList={feedList} />
-          </View>
+          <FeedGallery feedList={feedList} />
         ) : (
           <NoFeed text={'피드가 비어 있습니다. \n첫 피드를 올려보세요!'} />
         )}
@@ -86,22 +76,6 @@ const styles = StyleSheet.create({
     paddingBottom: 8,
     fontSize: 16,
     padding: 16,
-  },
-  nickName: {
-    paddingVertical: 8,
-    fontFamily: 'GmarketSansTTFMedium',
-  },
-  introduceContainer: {
-    marginVertical: 16,
-    borderRadius: 5,
-    paddingHorizontal: 16,
-  },
-  noIntroduce: {
-    fontFamily: 'GmarketSansTTFMedium',
-    color: '#999',
-  },
-  flex: {
-    flex: 1,
   },
 });
 export default Account;
