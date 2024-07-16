@@ -6,9 +6,9 @@ import {feedListApi, getAccountInfoApi} from '../../api';
 import {saveUserInfo} from '../../utils/helpers';
 import Toast from 'react-native-toast-message';
 import FeedChatSvg from '../../assets/icons/feedChat.svg';
-import NoFeedSvg from '../../assets/icons/noFeed.svg';
 import EmotionGoodSvg from '../../assets/icons/emoticonGood.svg';
 import Logo from '../../components/common/Logo';
+import NoFeed from '../../components/common/NoFeed';
 
 const screenWidth = Dimensions.get('window').width;
 
@@ -55,32 +55,18 @@ const Home = ({navigation, route}) => {
     <SafeAreaView style={styles.homeContainer}>
       <ScrollView
         style={styles.scrollArea}
-        contentContainerStyle={{flexGrow: 1}}>
+        contentContainerStyle={styles.scrollAreaContainer}>
         {/* TopBar */}
         <View style={styles.topBar}>
-          {/* left 로고 영역 */}
-          <View style={styles.logoContainer}>
-            <Logo width={40} height={40} fonsSize={20} marginTop={-4} />
-          </View>
+          <Logo width={40} height={40} fonsSize={20} marginTop={-4} />
         </View>
 
         {/* 사용자 피드 리스트 영역 */}
-
-        {!feedList.length && (
-          <View style={styles.feedArea}>
-            <NoFeedSvg
-              style={styles.noFeedIcon}
-              color="#ddd"
-              width={42}
-              height={48}
-            />
-            <Text style={styles.noFeedText}>
-              {'피드가 비어 있습니다. \n팔로우할 친구를 찾아보세요!'}
-            </Text>
-          </View>
-        )}
-
-        {!!feedList.length &&
+        {!feedList.length ? (
+          <NoFeed
+            text={'피드가 비어 있습니다. \n팔로우할 친구를 찾아보세요!'}
+          />
+        ) : (
           feedList.map(el => (
             <View key={el.id}>
               {/* 피드 작성자 정보 */}
@@ -121,7 +107,8 @@ const Home = ({navigation, route}) => {
                 </View>
               </TouchableOpacity>
             </View>
-          ))}
+          ))
+        )}
       </ScrollView>
     </SafeAreaView>
   );
@@ -135,19 +122,16 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   scrollArea: {flex: 1},
+  scrollAreaContainer: {flexGrow: 1},
   topBar: {
     flexDirection: 'row',
     paddingVertical: 4,
     alignItems: 'center',
     justifyContent: 'space-between',
-  },
-  logoContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingVertical: 4,
     marginTop: 4,
     paddingBottom: 12,
   },
+
   profileArea: {
     alignItems: 'center',
     flexDirection: 'row',
@@ -173,27 +157,6 @@ const styles = StyleSheet.create({
     marginLeft: -8,
   },
 
-  storyItemText: {
-    fontFamily: 'GmarketSansTTFMedium',
-    fontWeight: 'thin',
-    fontSize: 12,
-  },
-  feedArea: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    flex: 1,
-  },
-  noFeedIcon: {
-    marginBottom: 8,
-  },
-  noFeedText: {
-    fontFamily: 'GmarketSansTTFMedium',
-    fontWeight: 'semibold',
-    fontSize: 16,
-    color: '#999',
-    textAlign: 'center',
-    lineHeight: 20,
-  },
   iconArea: {
     flexDirection: 'row',
     paddingVertical: 8,

@@ -10,28 +10,12 @@ import {
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {accountInfoDetail} from '../../api';
 import {ScrollView} from 'react-native-gesture-handler';
-import NoFeedSvg from '../../assets/icons/noFeed.svg';
+
+import NoFeed from '../../components/common/NoFeed';
 
 const numColumns = 3;
 const screenWidth = Dimensions.get('window').width;
 const imageSize = screenWidth / numColumns;
-
-// 피드가 하나도 없을 경우
-const FeedListEmpty = () => {
-  return (
-    <View style={styles.feedListEmpty}>
-      <NoFeedSvg
-        style={styles.noFeedIcon}
-        color="#ddd"
-        width={42}
-        height={48}
-      />
-      <Text style={styles.noFeenMsg}>
-        {'피드가 비어 있습니다. \n첫 피드를 올려보세요!'}
-      </Text>
-    </View>
-  );
-};
 
 // 피드 정렬을 위한 row 세팅
 const renderRow = (rowData, rowIndex) => (
@@ -153,7 +137,7 @@ const Account = ({navigation}) => {
             <FeeListExist feedList={feedList} />
           </View>
         ) : (
-          <FeedListEmpty />
+          <NoFeed text={'피드가 비어 있습니다. \n첫 피드를 올려보세요!'} />
         )}
       </ScrollView>
     </SafeAreaView>
@@ -199,19 +183,6 @@ const styles = StyleSheet.create({
   nickName: {
     paddingVertical: 8,
     fontFamily: 'GmarketSansTTFMedium',
-  },
-  feedListEmpty: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  noFeenMsg: {
-    fontFamily: 'GmarketSansTTFMedium',
-    fontWeight: 'semibold',
-    fontSize: 16,
-    color: '#999',
-    textAlign: 'center',
-    lineHeight: 20,
   },
   introduceContainer: {
     marginVertical: 16,
