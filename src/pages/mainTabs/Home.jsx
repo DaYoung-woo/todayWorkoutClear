@@ -156,7 +156,6 @@ const styles = StyleSheet.create({
     borderColor: '#ddd',
     marginLeft: -8,
   },
-
   iconArea: {
     flexDirection: 'row',
     paddingVertical: 8,

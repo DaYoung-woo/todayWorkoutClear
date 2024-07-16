@@ -104,13 +104,15 @@ const Plus = ({navigation, state}) => {
             style={styles.deleteImageIcon}
           />
         </TouchableOpacity>
-        <Image
-          source={{uri: item.image?.path}}
-          width={90}
-          height={90}
-          keyExtractor={item.id}
-          style={styles.imagePreviewItem}
-        />
+        <View>
+          <Image
+            source={{uri: item.image?.path}}
+            width={90}
+            height={90}
+            keyExtractor={item.id}
+            style={styles.imagePreviewItem}
+          />
+        </View>
       </View>
     );
   };
@@ -250,14 +252,16 @@ const styles = StyleSheet.create({
   },
   deleteImageIconArea: {
     position: 'absolute',
-    top: 0,
-    right: 0,
+    top: 4,
+    right: 4,
     zIndex: 10,
+    backgroundColor: '#fff',
+    borderRadius: 100,
   },
   deleteImageIcon: {
-    width: 16,
-    height: 16,
-    margin: 4,
+    width: 12,
+    height: 12,
+    margin: 1,
   },
 });
 
