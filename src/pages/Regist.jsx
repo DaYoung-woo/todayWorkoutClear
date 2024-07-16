@@ -3,7 +3,16 @@ import {Text, View, TextInput, TouchableOpacity} from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
 import Toast from 'react-native-toast-message';
 import {regist as styles} from '../styles';
-import {registApi} from '../api/index';
+import {registApi} from '../api';
+import {
+  getEmailValid,
+  getPasswordValid,
+  getPasswordCheckValid,
+  getNicknameValid,
+  reigstValid,
+  getPhoneNumberValid,
+} from '../utils/valid';
+import Input from '../components/common/Input';
 
 const Regist = ({navigation}) => {
   const [submit, setSubmit] = useState(false);
@@ -15,88 +24,33 @@ const Regist = ({navigation}) => {
     nickname: '',
   });
 
-  // 이메일 유효성 검사
-  const getEmailValid = () => {
-    if (!form.email) {
-      return '이메일을 입력해주세요';
-    }
-    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!regex.test(form.email)) {
-      return '이메일 형식에 맞게 입력해주세요.';
-    }
-
-    return '';
-  };
-
-  // 패스워드 유효성 검사
-  const getPasswordValid = () => {
-    /* 회원가입 시 비밀번호는 8~20, 최소 하나의 영어소문자, 영어 대문자, 특수 문자, 숫자 이상 포함되어야 합니다 */
-    if (!form.password) {
-      return '비밀번호를 입력해주세요.';
-    }
-
-    const regex =
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,20}$/;
-    if (!regex.test(form.password)) {
-      return '대/소문자, 특수 문자, 숫자를 포함하여 8글자 이상 입력하세요.';
-    }
-
-    if (form.password.length > 20) {
-      return '비밀번호는 20자 이하로만 입력해주세요';
-    }
-
-    return '';
-  };
-
-  // 패스워드 확인 유효성 검사
-  const getPasswordCheckValid = () => {
-    if (!form.passwordCheck) {
-      return '비밀번호 확인을 입력해주세요.';
-    }
-
-    if (form.password !== form.passwordCheck) {
-      return '비밀번호와 일치하지 않습니다.';
-    }
-
-    return '';
-  };
-
   // 회원가입 전 유효성 검사 확인하고 회원가입 api 요청
   const sumbitForm = () => {
     setSubmit(true);
+    if (!reigstValid(form)) {
+      return;
+    }
 
-    if (getEmailValid().length > 0) {
-      return;
-    }
-    if (getPasswordValid().length > 0) {
-      return;
-    }
-    if (getPasswordCheckValid().length > 0) {
-      return;
-    }
-    if (!form.email.length && form.number === 0) {
-      return;
-    }
     registUser();
   };
 
   const registUser = async () => {
     try {
+      // api 요청
       const param = {...form};
       delete param.passwordCheck;
-
       await registApi(param);
-      Toast.show({
-        type: 'success',
-        text1: '회원가입이 완료되었습니다.',
-      });
+
+      // 회원 가입 성공 후 이동
+      Toast.show({type: 'success', text1: '회원가입이 완료되었습니다.'});
       navigation.navigate('Login');
     } catch (e) {
-      const msg = '작성하신 내용을 다시 확인해주세요.';
-
+      console.log(e?.response?.data);
       Toast.show({
         type: 'error',
-        text1: msg,
+        text1:
+          e?.response?.data?.errors[0]?.reason ||
+          '작성하신 내용을 다시 확인해주세요.',
       });
     }
   };
@@ -105,76 +59,66 @@ const Regist = ({navigation}) => {
     <ScrollView style={styles.container}>
       {/* 이메일 */}
       <View style={styles.wrapper}>
-        <Text style={styles.textInputLabel}>이메일</Text>
-        <TextInput
-          onChangeText={email => setForm({...form, email})}
+        <Input
           value={form.email}
-          style={styles.textInput}
-          placeholder="이메일"
+          setValue={email => setForm({...form, email})}
+          submit={submit}
+          valid={getEmailValid(form.email)}
+          label="이메일"
+          secureTextEntry={false}
         />
-        <Text style={styles.errorMsg}>{submit && getEmailValid()}</Text>
       </View>
 
       {/* 비밀번호 */}
       <View style={styles.wrapper}>
-        <Text style={styles.textInputLabel}>비밀번호</Text>
-        <TextInput
-          onChangeText={password => setForm({...form, password})}
+        <Input
           value={form.password}
-          style={styles.textInput}
+          setValue={password => setForm({...form, password})}
+          submit={submit}
+          valid={getPasswordValid(form.password)}
+          label="비밀번호"
           secureTextEntry={true}
-          placeholder="비밀번호"
         />
-        <Text style={styles.errorMsg}>{submit && getPasswordValid()}</Text>
       </View>
 
       {/* 비밀번호 확인 */}
       <View style={styles.wrapper}>
-        <Text style={styles.textInputLabel}>비밀번호 확인</Text>
-        <TextInput
-          onChangeText={passwordCheck => setForm({...form, passwordCheck})}
+        <Input
           value={form.passwordCheck}
-          style={styles.textInput}
+          setValue={passwordCheck => setForm({...form, passwordCheck})}
+          submit={submit}
+          valid={getPasswordCheckValid(form.password, form.passwordCheck)}
+          label="비밀번호 확인"
           secureTextEntry={true}
-          placeholder="비밀번호 확인"
         />
-
-        <Text style={styles.errorMsg}>{submit && getPasswordCheckValid()}</Text>
       </View>
 
       {/* 닉네임 */}
       <View style={styles.wrapper}>
-        <Text style={styles.textInputLabel}>닉네임</Text>
-        <TextInput
-          onChangeText={nickname => setForm({...form, nickname})}
+        <Input
           value={form.nickname}
-          style={styles.textInput}
-          placeholder="닉네임"
+          setValue={nickname => setForm({...form, nickname})}
+          submit={submit}
+          valid={getNicknameValid(form.nickname)}
+          label="닉네임"
+          secureTextEntry={false}
         />
-        <Text style={styles.errorMsg}>
-          {submit &&
-            form.nickname.length < 2 &&
-            '2글자 이상의 닉네임을 입력해주세요.'}
-        </Text>
       </View>
 
       {/* 전화번호 */}
       <View style={styles.wrapper}>
-        <Text style={styles.textInputLabel}>전화번호</Text>
-        <TextInput
-          onChangeText={phoneNumber => {
+        <Input
+          value={form.phoneNumber}
+          setValue={phoneNumber => {
             if (/^\d+$/.test(phoneNumber)) {
               setForm({...form, phoneNumber});
             }
           }}
-          value={form.phoneNumber}
-          style={styles.textInput}
-          placeholder="전화번호"
-          keyboardType="number-pad"
+          submit={submit}
+          valid={getPhoneNumberValid(form.phoneNumber)}
+          label="전화번호"
+          secureTextEntry={false}
         />
-        <Text style={styles.errorMsg}>
-          {submit && !form.phoneNumber.length && '전화번호를 입력해주세요.'}
-        </Text>
       </View>
 
       {/* 회원가입 버튼 */}

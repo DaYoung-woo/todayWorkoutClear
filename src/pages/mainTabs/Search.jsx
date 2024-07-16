@@ -12,7 +12,6 @@ import {
 import NoFeedSvg from '../../assets/icons/noFeed.svg';
 import {searchFeedApi} from '../../api';
 import Toast from 'react-native-toast-message';
-import {useNavigation} from '@react-navigation/native';
 
 const numColumns = 3;
 const screenWidth = Dimensions.get('window').width;

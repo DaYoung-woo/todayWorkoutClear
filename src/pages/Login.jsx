@@ -3,9 +3,10 @@ import {Text, View, TextInput, Image} from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {login as styles} from '../styles';
-import {loginApi, setCookie} from '../api';
+import {loginApi} from '../api';
 import Toast from 'react-native-toast-message';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import {saveCookieStorage} from '../utils/helpers';
+import {getEmailValid} from '../utils/valid';
 
 const Login = ({navigation}) => {
   const [email, setEmail] = useState('');
@@ -15,7 +16,7 @@ const Login = ({navigation}) => {
   // 로그인 버튼 클릭 이벤트
   const sumbitForm = () => {
     setSumbit(true);
-    if (!email.length || !password.length) {
+    if (!getEmailValid(email) || !password.length) {
       return;
     }
 
@@ -25,33 +26,15 @@ const Login = ({navigation}) => {
   // 로그인 api 요청
   const loginUser = async () => {
     try {
-      const param = {
-        email,
-        password,
-      };
-      const res = await loginApi(param); //instance.post('/auth', params);
+      const param = {email, password};
+      const res = await loginApi(param);
+
       // 쿠키 저장 후 홈화면으로 이동
       saveCookieStorage(res);
       navigation.navigate('Main');
     } catch (e) {
       const text = e?.response?.data?.message || '에러가 발생했습니다.';
-      Toast.show({
-        type: 'error',
-        text1: text,
-      });
-    }
-  };
-
-  // 쿠키 저장
-  const saveCookieStorage = async res => {
-    const [cookie] = res.headers['set-cookie'];
-    const stringCookie = JSON.stringify(cookie);
-    setCookie(stringCookie);
-
-    try {
-      await AsyncStorage.setItem('cookie', stringCookie);
-    } catch (e) {
-      console.log(e);
+      Toast.show({type: 'error', text1: text});
     }
   };
 
@@ -76,9 +59,7 @@ const Login = ({navigation}) => {
           style={styles.textInput}
           placeholder="이메일"
         />
-        <Text style={styles.errorMsg}>
-          {submit && !email.length && '이메일을 입력해주세요'}
-        </Text>
+        <Text style={styles.errorMsg}>{submit && getEmailValid(email)}</Text>
       </View>
 
       {/* 비밀번호 */}

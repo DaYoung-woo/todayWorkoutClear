@@ -33,6 +33,9 @@ const Plus = ({navigation, state}) => {
           image: el,
         });
       });
+
+      console.log(res);
+
       setImageList(images);
     } catch (e) {
       console.log(e);
@@ -62,9 +65,10 @@ const Plus = ({navigation, state}) => {
     try {
       const formData = new FormData();
       const feedRequest = JSON.stringify({
-        content,
-        tag: extractHashtags(content),
+        content: content,
+        tags: extractHashtags(content),
       });
+      console.log(feedRequest);
 
       formData.append('feedRequest', feedRequest);
 
@@ -72,7 +76,9 @@ const Plus = ({navigation, state}) => {
         const image = {
           uri: el.image.path,
           type: el.image.mime,
-          name: JSON.stringify(el.id).split('.')[1],
+          name: `image_${el.image.path.substring(
+            el.image.path.indexOf('picker/') + 7,
+          )}`,
         };
 
         formData.append('image', image);

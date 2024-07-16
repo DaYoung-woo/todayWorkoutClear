@@ -3,23 +3,22 @@ import {Image, StyleSheet, Text, View, Dimensions} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
 import {feedListApi, getAccountInfoApi} from '../../api';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import Toast from 'react-native-toast-message';
 import ChatSvg from '../../assets/icons/chat.svg';
 import FeedChatSvg from '../../assets/icons/feedChat.svg';
 import NoFeedSvg from '../../assets/icons/noFeed.svg';
 import EmotionGoodSvg from '../../assets/icons/emoticonGood.svg';
+import {saveUserInfo} from '../../utils/helpers';
 
 const screenWidth = Dimensions.get('window').width;
 
 const Home = ({navigation, route}) => {
   const [feedList, setFeedList] = useState([]);
-  const params = route.params;
 
   useEffect(() => {
     loadAccountInfo();
     loadFeedList();
-  }, [params]);
+  }, []);
 
   // 사용자 정보 api
   const loadAccountInfo = async () => {
@@ -27,33 +26,19 @@ const Home = ({navigation, route}) => {
       const res = await getAccountInfoApi();
       saveUserInfo(res.data.result);
     } catch (e) {
-      console.log(e);
       if (e?.response?.status === 400) {
-        Toast.show({
-          type: 'error',
-          text1: '로그인 기간이 만료되었습니다.',
-        });
+        Toast.show({type: 'error', text1: '로그인 기간이 만료되었습니다.'});
+      } else {
+        Toast.show({type: 'error', text1: '에러가 발생했습니다.'});
       }
       navigation.navigate('Login');
-    }
-  };
-
-  // storage에 사용자 정보 저장
-  const saveUserInfo = async userInfo => {
-    try {
-      AsyncStorage.setItem('userInfo', JSON.stringify(userInfo));
-    } catch (e) {
-      console.log(e);
     }
   };
 
   // 피드리스트 api
   const loadFeedList = async () => {
     try {
-      const param = {
-        page: 0,
-        pageSize: 10,
-      };
+      const param = {page: 0, pageSize: 10};
       const res = await feedListApi(param);
       setFeedList(res.data.result.content);
     } catch (e) {
@@ -62,8 +47,7 @@ const Home = ({navigation, route}) => {
   };
 
   // 내정보 페이지로 이동
-  const clickProfile = email => {
-    //if(email === )
+  const clickProfile = () => {
     navigation.navigate('Account');
   };
 

@@ -1,18 +1,20 @@
 import React, {useEffect, useState} from 'react';
 import {StyleSheet, Text, View, Image, Dimensions} from 'react-native';
 import Carousel from 'react-native-reanimated-carousel';
-import {addCommentApi, getFeedDetail, updateFeedEmotion} from '../api';
-import EmotionGoodSvg from '../assets/icons/emoticonGood.svg';
-import EmotionFunnySvg from '../assets/icons/emoticonFunny.svg';
-import EmotionAngrySvg from '../assets/icons/emoticonAngry.svg';
-import EmotionSadSvg from '../assets/icons/emoticonSad.svg';
-import EmotionSurpriseSvg from '../assets/icons/emoticonSurprise.svg';
 import {
   ScrollView,
   TextInput,
   TouchableOpacity,
 } from 'react-native-gesture-handler';
 import Toast from 'react-native-toast-message';
+import {addCommentApi, getFeedDetail, updateFeedEmotion} from '../api';
+import EmotionGoodSvg from '../assets/icons/emoticonGood.svg';
+import EmotionFunnySvg from '../assets/icons/emoticonFunny.svg';
+import EmotionAngrySvg from '../assets/icons/emoticonAngry.svg';
+import EmotionSadSvg from '../assets/icons/emoticonSad.svg';
+import EmotionSurpriseSvg from '../assets/icons/emoticonSurprise.svg';
+import PencilSvg from '../assets/icons/pencil.svg';
+
 const screenWidth = Dimensions.get('window').width;
 
 // 캐러셀 이미지
@@ -72,6 +74,7 @@ const TagViewRender = ({content}) => {
 const Feed = ({route}) => {
   const {id} = route.params;
   const [comment, setComment] = useState('');
+  const [edit, setEdit] = useState(0);
   const [feed, setFeed] = useState({
     content: '',
     emotions: {},
@@ -250,8 +253,34 @@ const Feed = ({route}) => {
           {/* 댓글이 있는 경우 */}
           {feed.replys.map(el => (
             <View style={styles.commentItem} key={el.nickname + el.reply}>
-              <Text style={styles.commentNickname}>{el.nickname}</Text>
-              <Text style={styles.commentText}>{el.reply}</Text>
+              <View style={styles.justifyBetween}>
+                <Text style={styles.commentNickname}>{el.nickname}</Text>
+                {edit === el.replyId && (
+                  <View>
+                    <TouchableOpacity onPress={() => setEdit(el.replyId)}>
+                      <PencilSvg width={20} height={20} color="#2e8cf4" />
+                    </TouchableOpacity>
+                  </View>
+                )}
+              </View>
+
+              {edit === el.replyId ? (
+                <View style={styles.commentEdit}>
+                  <TextInput
+                    style={styles.textInput}
+                    placeholder="댓글"
+                    value={comment}
+                    onChangeText={setComment}
+                  />
+                  <TouchableOpacity
+                    style={styles.commentBtn}
+                    onPress={submitForm}>
+                    <Text style={styles.commentBtnText}>작성</Text>
+                  </TouchableOpacity>
+                </View>
+              ) : (
+                <Text style={styles.commentText}>{el.reply}</Text>
+              )}
             </View>
           ))}
         </View>
@@ -391,6 +420,10 @@ const styles = StyleSheet.create({
     fontFamily: 'GmarketSansTTFMedium',
     color: '#555',
     paddingVertical: 8,
+  },
+  justifyBetween: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
 });
 

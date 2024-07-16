@@ -113,6 +113,7 @@ export const login = StyleSheet.create({
     paddingVertical: 12,
   },
   registBtnText: {
+    fontFamily: 'GmarketSansTTFMedium',
     color: '#2E8CF4',
     fontSize: 16,
     fontWeight: 'semibold',

@@ -1,5 +1,5 @@
 import axios from 'axios';
-
+import {makeQueryString} from '../utils/helpers';
 // api 문서 경로
 // http://13.209.27.220:8080/swagger-ui/index.html#/auth-controller/login
 const instance = axios.create({
@@ -10,13 +10,6 @@ const instance = axios.create({
   },
   withCredentials: true,
 });
-
-// 쿼리 스트링 생성
-const makeQueryString = obj => {
-  return Object.entries(obj)
-    .map((el, idx) => `${idx === 0 ? '?' : '&'}${el[0]}=${el[1]}`)
-    .join('');
-};
 
 // header 쿠키 세팅
 export const setCookie = cookie => {
@@ -42,7 +35,7 @@ export const feedListApi = params => {
 // 피드 추가 api
 export const addFeedListApi = params => {
   return instance.post('/feed', params, {
-    headers: {'content-type': 'multipart/form-data'},
+    headers: {'Content-Type': 'multipart/form-data'},
     transformRequest: formData => formData,
   });
 };
@@ -80,4 +73,12 @@ export const addCommentApi = (feedId, reply) => {
 // 피드 태그 검색
 export const searchFeedApi = param => {
   return instance.get(`/feed/search${makeQueryString(param)}`);
+};
+
+// 댓글 수정
+export const updateCommentApi = param => {
+  return instance.put(
+    `/feed/${param.feedId}/reply/${param.replyId}`,
+    param.reply,
+  );
 };
