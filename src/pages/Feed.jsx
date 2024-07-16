@@ -1,20 +1,13 @@
 import React, {useEffect, useState} from 'react';
 import {StyleSheet, Text, View, Image, Dimensions, Modal} from 'react-native';
 import Carousel from 'react-native-reanimated-carousel';
-import {
-  ScrollView,
-  TextInput,
-  TouchableOpacity,
-} from 'react-native-gesture-handler';
+import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
 import Toast from 'react-native-toast-message';
 import {addCommentApi, getFeedDetail, updateFeedEmotion} from '../api';
-import EmotionGoodSvg from '../assets/icons/emoticonGood.svg';
-import EmotionFunnySvg from '../assets/icons/emoticonFunny.svg';
-import EmotionAngrySvg from '../assets/icons/emoticonAngry.svg';
-import EmotionSadSvg from '../assets/icons/emoticonSad.svg';
-import EmotionSurpriseSvg from '../assets/icons/emoticonSurprise.svg';
-import PencilSvg from '../assets/icons/pencil.svg';
+
 import Comment from '../components/feed/Comment';
+import InputWithBtn from '../components/common/InputWithBtn';
+import Emotion from '../components/feed/Emotion';
 
 const screenWidth = Dimensions.get('window').width;
 
@@ -175,93 +168,26 @@ const Feed = ({route}) => {
       <TagViewRender content={feed.content} />
 
       {/* 감정 표현 영역 */}
-      <View style={styles.emotionContainer}>
-        <View style={styles.emotionWrapper}>
-          <TouchableOpacity onPress={() => changeEmotion('FUNNY')}>
-            <EmotionFunnySvg
-              color={feed.emotions.emotionCheck === 'FUNNY' ? '#555' : '#aaa'}
-              width={32}
-              height={32}
-            />
-          </TouchableOpacity>
-          <Text style={styles.emotionText}>웃겨요</Text>
-          <Text style={styles.emotionCount}>{feed.emotions.funny}</Text>
-        </View>
-        <View style={styles.emotionWrapper}>
-          <TouchableOpacity
-            onPress={() => changeEmotion('SURPRISE')}
-            style={styles.emotionSvg}>
-            <EmotionSurpriseSvg
-              color={
-                feed.emotions.emotionCheck === 'SURPRISE' ? '#555' : '#aaa'
-              }
-              width={32}
-              height={32}
-            />
-          </TouchableOpacity>
-          <Text style={styles.emotionText}>놀라워요</Text>
-          <Text style={styles.emotionCount}>{feed.emotions.surprise}</Text>
-        </View>
-        <View style={styles.emotionWrapper}>
-          <TouchableOpacity onPress={() => changeEmotion('GOOD')}>
-            <EmotionGoodSvg
-              color={feed.emotions.emotionCheck === 'GOOD' ? '#555' : '#aaa'}
-              width={32}
-              height={32}
-            />
-          </TouchableOpacity>
-          <Text style={styles.emotionText}>좋아요</Text>
-          <Text style={styles.emotionCount}>{feed.emotions.good}</Text>
-        </View>
-        <View style={styles.emotionWrapper}>
-          <TouchableOpacity onPress={() => changeEmotion('SAD')}>
-            <EmotionSadSvg
-              color={feed.emotions.emotionCheck === 'SAD' ? '#555' : '#aaa'}
-              width={32}
-              height={32}
-            />
-          </TouchableOpacity>
-          <Text style={styles.emotionText}>슬퍼요</Text>
-          <Text style={styles.emotionCount}>{feed.emotions.sad}</Text>
-        </View>
-        <View style={styles.emotionWrapper}>
-          <TouchableOpacity onPress={() => changeEmotion('ANGRY')}>
-            <EmotionAngrySvg
-              color={feed.emotions.emotionCheck === 'ANGRY' ? '#555' : '#aaa'}
-              width={32}
-              height={32}
-            />
-          </TouchableOpacity>
-          <Text style={styles.emotionText}>화나요</Text>
-          <Text style={styles.emotionCount}>{feed.emotions.angry}</Text>
-        </View>
-      </View>
+      <Emotion changeEmotion={changeEmotion} emotions={feed.emotions} />
 
       {/* 댓글 영역 */}
       <View style={styles.commentContainer}>
         <Text style={styles.profileText}>댓글{feed.replys.length}개</Text>
-        <View style={styles.commentEdit}>
-          <TextInput
-            style={styles.textInput}
-            placeholder="댓글"
-            value={comment}
-            onChangeText={setComment}
-          />
-          <TouchableOpacity style={styles.commentBtn} onPress={submitForm}>
-            <Text style={styles.commentBtnText}>작성</Text>
-          </TouchableOpacity>
-        </View>
-        {/* 댓글 리스트 */}
+        <InputWithBtn
+          value={comment}
+          setValue={setComment}
+          onPress={submitForm}
+          label={'댓글'}
+        />
+
         <View style={styles.commentList}>
-          {/* 댓글이 없는 경우 */}
-          {!feed.replys.length && (
+          {feed.replys.length ? (
+            <Comment feed={feed} />
+          ) : (
             <Text style={styles.commentEmptyText}>
               아직 댓글이 없어요. 첫 댓글을 작성해보세요!
             </Text>
           )}
-
-          {/* 댓글이 있는 경우 */}
-          <Comment feed={feed} />
         </View>
       </View>
     </ScrollView>
@@ -304,34 +230,7 @@ const styles = StyleSheet.create({
     padding: 12,
     flexDirection: 'row',
   },
-  emotionContainer: {
-    flexDirection: 'row',
-    marginHorizontal: 8,
-    justifyContent: 'center',
-    gap: 12,
-  },
-  emotionWrapper: {
-    paddingTop: 20,
-    textAlign: 'center',
-  },
-  emotionSvg: {
-    textAlign: 'center',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  emotionText: {
-    fontFamily: 'GmarketSansTTFMedium',
-    fontSize: 12,
-    color: '#555',
-    textAlign: 'center',
-    paddingTop: 4,
-  },
-  emotionCount: {
-    fontFamily: 'GmarketSansTTFMedium',
-    fontSize: 10,
-    textAlign: 'center',
-    paddingTop: 4,
-  },
+
   contentsText: {
     fontFamily: 'GmarketSansTTFMedium',
     color: '#555',
@@ -344,42 +243,12 @@ const styles = StyleSheet.create({
     marginTop: 32,
     marginHorizontal: 4,
   },
-  commentEdit: {
-    flexDirection: 'row',
-    width: '100%',
-    alignItems: 'center',
-    paddingRight: 8,
-  },
 
-  textInput: {
-    fontFamily: 'GmarketSansTTFMedium',
-    borderWidth: 1,
-    padding: 12,
-    height: 44,
-    borderRadius: 5,
-    fontSize: 16,
-    borderColor: '#aaa',
-    marginVertical: 12,
-    marginHorizontal: 8,
-    flex: 1,
-  },
-  commentBtn: {
-    fontFamily: 'GmarketSansTTFMedium',
-    backgroundColor: '#2E8CF4',
-    borderRadius: 5,
-    height: 44,
-    justifyContent: 'center',
-    paddingHorizontal: 12,
-  },
   commentEmptyText: {
     fontFamily: 'GmarketSansTTFMedium',
     textAlign: 'center',
     paddingVertical: 24,
     color: '#aaa',
-  },
-  commentBtnText: {
-    color: '#fff',
-    fontSize: 16,
   },
 });
 
