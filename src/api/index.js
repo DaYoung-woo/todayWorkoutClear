@@ -2,7 +2,7 @@ import axios from 'axios';
 import {makeQueryString} from '../utils/helpers';
 // api 문서 경로
 // http://13.209.27.220:8080/swagger-ui/index.html#/auth-controller/login
-const instance = axios.create({
+export const instance = axios.create({
   baseURL: 'http://13.209.27.220:8080',
   headers: {
     'Content-type': 'Application/json',
