@@ -40,8 +40,9 @@ const Profile = ({profile, setProfile}) => {
       <TouchableOpacity style={styles.profileWrapper} onPress={selectImage}>
         <Image
           source={
-            {uri: `http://13.209.27.220:8080${profile}`} ||
-            require('../../assets/images/basicUser.png')
+            profile
+              ? {uri: `http://13.209.27.220:8080${profile}`}
+              : require('../../assets/images/basicUser.png')
           }
           style={styles.profile}
         />

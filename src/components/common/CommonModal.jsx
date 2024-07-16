@@ -1,27 +1,27 @@
-import React, {useState} from 'react';
-import {Button, Text, View} from 'react-native';
+import React from 'react';
+import {Button, StyleSheet, Text, View} from 'react-native';
 import Modal from 'react-native-modal';
 
-const CommonModal = () => {
-  const [isModalVisible, setModalVisible] = useState(false);
-
-  const toggleModal = () => {
-    setModalVisible(!isModalVisible);
-  };
-
+const CommonModal = ({text, isShow, setIsShow}) => {
   return (
-    <View style={{flex: 1}}>
-      <Button title="Show modal" onPress={toggleModal} />
+    <View style={styles.flex}>
+      <Button title="Show modal" onPress={setIsShow} />
 
-      <Modal isVisible={isModalVisible}>
-        <View style={{flex: 1}}>
-          <Text>Hello!</Text>
+      <Modal isVisible={isShow}>
+        <View style={styles.flex}>
+          <Text>{text}</Text>
 
-          <Button title="Hide modal" onPress={toggleModal} />
+          <Button title="Hide modal" onPress={setIsShow} />
         </View>
       </Modal>
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  flex: {
+    flex: 1,
+  },
+});
 
 export default CommonModal;

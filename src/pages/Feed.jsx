@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {StyleSheet, Text, View, Image, Dimensions} from 'react-native';
+import {StyleSheet, Text, View, Image, Dimensions, Modal} from 'react-native';
 import Carousel from 'react-native-reanimated-carousel';
 import {
   ScrollView,
@@ -14,6 +14,7 @@ import EmotionAngrySvg from '../assets/icons/emoticonAngry.svg';
 import EmotionSadSvg from '../assets/icons/emoticonSad.svg';
 import EmotionSurpriseSvg from '../assets/icons/emoticonSurprise.svg';
 import PencilSvg from '../assets/icons/pencil.svg';
+import Comment from '../components/feed/Comment';
 
 const screenWidth = Dimensions.get('window').width;
 
@@ -133,32 +134,42 @@ const Feed = ({route}) => {
     }
   };
 
+  const openFollowModal = () => {};
+
   return (
     <ScrollView style={styles.container}>
       {/* 프로필 영역 */}
       <View style={styles.profile}>
-        {feed?.profileImagePath ? (
-          <Image
-            source={{uri: `http://13.209.27.220:8080${feed.profileImagePath}`}}
-            style={styles.profileImage}
-          />
-        ) : (
-          <Image
-            source={require('../assets/images/basicUser.png')}
-            style={styles.profileImage}
-          />
-        )}
-        <Text style={styles.profileText}>
-          {feed.nickname}
-          {feed.profileImagePath}
-        </Text>
+        <TouchableOpacity onPress={openFollowModal}>
+          {feed?.profileImagePath ? (
+            <Image
+              source={{
+                uri: `http://13.209.27.220:8080${feed.profileImagePath}`,
+              }}
+              style={styles.profileImage}
+            />
+          ) : (
+            <Image
+              source={require('../assets/images/basicUser.png')}
+              style={styles.profileImage}
+            />
+          )}
+        </TouchableOpacity>
+        <Text style={styles.profileText}>{feed.nickname}</Text>
       </View>
 
       {/* 이미지 캐러셀 영역 */}
-      <RenderFeedImage
-        style={{height: screenWidth, width: screenWidth}}
-        images={feed.images}
-      />
+      {feed.images.length > 1 ? (
+        <RenderFeedImage
+          style={{height: screenWidth, width: screenWidth}}
+          images={feed.images}
+        />
+      ) : (
+        <Image
+          source={{uri: `http://13.209.27.220:8080${feed.images[0]}`}}
+          style={{height: screenWidth, width: screenWidth}}
+        />
+      )}
 
       {/* content 영역 */}
       <TagViewRender content={feed.content} />
@@ -250,38 +261,7 @@ const Feed = ({route}) => {
           )}
 
           {/* 댓글이 있는 경우 */}
-          {feed.replys.map(el => (
-            <View style={styles.commentItem} key={el.nickname + el.reply}>
-              <View style={styles.justifyBetween}>
-                <Text style={styles.commentNickname}>{el.nickname}</Text>
-                {edit === el.replyId && (
-                  <View>
-                    <TouchableOpacity onPress={() => setEdit(el.replyId)}>
-                      <PencilSvg width={20} height={20} color="#2e8cf4" />
-                    </TouchableOpacity>
-                  </View>
-                )}
-              </View>
-
-              {edit === el.replyId ? (
-                <View style={styles.commentEdit}>
-                  <TextInput
-                    style={styles.textInput}
-                    placeholder="댓글"
-                    value={comment}
-                    onChangeText={setComment}
-                  />
-                  <TouchableOpacity
-                    style={styles.commentBtn}
-                    onPress={submitForm}>
-                    <Text style={styles.commentBtnText}>작성</Text>
-                  </TouchableOpacity>
-                </View>
-              ) : (
-                <Text style={styles.commentText}>{el.reply}</Text>
-              )}
-            </View>
-          ))}
+          <Comment feed={feed} />
         </View>
       </View>
     </ScrollView>
@@ -370,18 +350,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingRight: 8,
   },
-  commentBtn: {
-    fontFamily: 'GmarketSansTTFMedium',
-    backgroundColor: '#2E8CF4',
-    borderRadius: 5,
-    height: 44,
-    justifyContent: 'center',
-    paddingHorizontal: 12,
-  },
-  commentBtnText: {
-    color: '#fff',
-    fontSize: 16,
-  },
+
   textInput: {
     fontFamily: 'GmarketSansTTFMedium',
     borderWidth: 1,
@@ -394,11 +363,13 @@ const styles = StyleSheet.create({
     marginHorizontal: 8,
     flex: 1,
   },
-  commentList: {
-    padding: 8,
-    borderTopWidth: 0.5,
-    borderColor: '#ddd',
-    paddingHorizontal: -4,
+  commentBtn: {
+    fontFamily: 'GmarketSansTTFMedium',
+    backgroundColor: '#2E8CF4',
+    borderRadius: 5,
+    height: 44,
+    justifyContent: 'center',
+    paddingHorizontal: 12,
   },
   commentEmptyText: {
     fontFamily: 'GmarketSansTTFMedium',
@@ -406,24 +377,9 @@ const styles = StyleSheet.create({
     paddingVertical: 24,
     color: '#aaa',
   },
-  commentItem: {
-    paddingHorizontal: 12,
-    borderBottomWidth: 0.5,
-    borderColor: '#ddd',
-    padding: 12,
-  },
-  commentNickname: {
-    fontFamily: 'GmarketSansTTFMedium',
-    color: '#999',
-  },
-  commentText: {
-    fontFamily: 'GmarketSansTTFMedium',
-    color: '#555',
-    paddingVertical: 8,
-  },
-  justifyBetween: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+  commentBtnText: {
+    color: '#fff',
+    fontSize: 16,
   },
 });
 
