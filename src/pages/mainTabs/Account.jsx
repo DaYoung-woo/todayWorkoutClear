@@ -12,45 +12,11 @@ import {accountInfoDetail} from '../../api';
 import {ScrollView} from 'react-native-gesture-handler';
 
 import NoFeed from '../../components/common/NoFeed';
+import FeedGallery from '../../components/common/FeedGallery';
 
 const numColumns = 3;
 const screenWidth = Dimensions.get('window').width;
 const imageSize = screenWidth / numColumns;
-
-// 피드 정렬을 위한 row 세팅
-const renderRow = (rowData, rowIndex) => (
-  <View key={rowIndex} style={styles.row}>
-    {rowData.map(item => (
-      <View key={item.id} style={styles.item}>
-        <Image
-          source={{uri: `http://13.209.27.220:8080${item.images[0]}`}}
-          style={styles.image}
-        />
-      </View>
-    ))}
-  </View>
-);
-
-// 피드 정렬을 위한 column 세팅
-const groupPhotosInRows = (photos, numColumns) => {
-  const rows = [];
-  for (let i = 0; i < photos.length; i += numColumns) {
-    rows.push(photos.slice(i, i + numColumns));
-  }
-  return rows;
-};
-
-//피드 리스트가 존재하는 경우
-const FeeListExist = ({feedList}) => {
-  const rows = groupPhotosInRows(feedList, numColumns);
-  return (
-    <View style={styles.feedListContainer}>
-      {rows.map((item, idx) => {
-        return renderRow(item, idx);
-      })}
-    </View>
-  );
-};
 
 const Account = ({navigation}) => {
   const [accountInfo, setAccountInfo] = useState({});
@@ -122,7 +88,9 @@ const Account = ({navigation}) => {
 
         {/* 자기소개 */}
         <View style={styles.introduceContainer}>
-          <Text style={styles.nickName}>{accountInfo.nickName}</Text>
+          <TouchableOpacity onPress={() => navigation.navigate('Mypage')}>
+            <Text style={styles.nickName}>{accountInfo.nickName}</Text>
+          </TouchableOpacity>
           <TouchableOpacity onPress={() => navigation.navigate('Mypage')}>
             <Text style={styles.noIntroduce}>
               {accountInfo.introduce ||
@@ -134,7 +102,8 @@ const Account = ({navigation}) => {
         {/* 피드 리스트 */}
         {feedList.length ? (
           <View style={{flex: 1}}>
-            <FeeListExist feedList={feedList} />
+            {/* <FeeListExist feedList={feedList} /> */}
+            <FeedGallery feedList={feedList} />
           </View>
         ) : (
           <NoFeed text={'피드가 비어 있습니다. \n첫 피드를 올려보세요!'} />

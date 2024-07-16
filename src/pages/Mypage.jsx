@@ -9,7 +9,9 @@ import {
 } from 'react-native';
 import {getAccountInfoApi, updateAccountInfo} from '../api';
 import Toast from 'react-native-toast-message';
-
+import Input from '../components/common/Input';
+import {getNicknameValid} from '../utils/valid';
+import PrimaryBtn from '../components/common/PrimaryBtn';
 const Mypage = ({navigation}) => {
   const [submit, setSubmit] = useState(false);
   const [nickname, setNickname] = useState('');
@@ -45,19 +47,13 @@ const Mypage = ({navigation}) => {
   const upateUserInfo = async () => {
     try {
       const params = {
-        nickname: {
-          value: nickname,
-        },
+        nickname: {value: nickname},
         name: '',
         introduce: content,
       };
       await updateAccountInfo(params);
 
-      Toast.show({
-        type: 'success',
-        text1: '회원 정보 변경이 완료되었습니다.',
-      });
-
+      Toast.show({type: 'success', text1: '회원 정보 변경이 완료되었습니다.'});
       navigation.goBack();
     } catch (e) {
       console.log(e);
@@ -76,18 +72,14 @@ const Mypage = ({navigation}) => {
 
       {/* 닉네임 */}
       <View style={styles.wrapper}>
-        <Text style={styles.textInputLabel}>닉네임</Text>
-        <TextInput
-          style={styles.textInput}
-          placeholder="닉네임"
+        <Input
           value={nickname}
-          onChangeText={setNickname}
+          setValue={setNickname}
+          submit={submit}
+          valid={getNicknameValid(nickname)}
+          label="닉네임"
+          secureTextEntry={false}
         />
-        <Text style={styles.errorMsg}>
-          {submit &&
-            nickname.length < 2 &&
-            '2글자 이상의 닉네임을 입력해주세요.'}
-        </Text>
       </View>
 
       {/* 자기소개 */}
@@ -105,9 +97,7 @@ const Mypage = ({navigation}) => {
 
       {/* 정보 수정 버튼 */}
       <View style={styles.wrapper}>
-        <TouchableOpacity style={styles.registBtn} onPress={sumbitForm}>
-          <Text style={styles.registBtnText}>정보수정</Text>
-        </TouchableOpacity>
+        <PrimaryBtn onPress={sumbitForm} label="정보 수정" />
       </View>
     </View>
   );

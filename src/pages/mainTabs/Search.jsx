@@ -6,16 +6,12 @@ import {
   Text,
   View,
   TextInput,
-  Dimensions,
-  Image,
 } from 'react-native';
 import NoFeedSvg from '../../assets/icons/noFeed.svg';
 import {searchFeedApi} from '../../api';
 import Toast from 'react-native-toast-message';
-
-const numColumns = 3;
-const screenWidth = Dimensions.get('window').width;
-const imageSize = screenWidth / numColumns;
+import FeedGallery from '../../components/common/FeedGallery';
+import NoFeed from '../../components/common/NoFeed';
 
 const Search = ({navigation}) => {
   const [search, setSeatch] = useState('');
@@ -23,10 +19,7 @@ const Search = ({navigation}) => {
 
   const submitForm = async () => {
     if (!search) {
-      Toast.show({
-        type: 'error',
-        text1: '검색어를 입력해주세요.',
-      });
+      Toast.show({type: 'error', text1: '검색어를 입력해주세요.'});
       return;
     }
     try {
@@ -35,50 +28,10 @@ const Search = ({navigation}) => {
         page: 0,
         pageSize: 20,
       });
-      console.log(res.data.result.content);
       setFeedList(res.data.result.content);
     } catch (e) {
       console.log(e);
     }
-  };
-  // 피드 정렬을 위한 row 세팅
-  const renderRow = (rowData, rowIndex) => {
-    return (
-      <View key={rowIndex} style={styles.row}>
-        {rowData.map(item => (
-          <TouchableOpacity
-            key={item.id}
-            style={styles.item}
-            onPress={() => navigation.navigate('Feed', {id: item.id})}>
-            <Image
-              source={{uri: `http://13.209.27.220:8080${item.images[0]}`}}
-              style={styles.image}
-            />
-          </TouchableOpacity>
-        ))}
-      </View>
-    );
-  };
-
-  // 피드 정렬을 위한 column 세팅
-  const groupPhotosInRows = (photos, numColumns) => {
-    const rows = [];
-    for (let i = 0; i < photos.length; i += numColumns) {
-      rows.push(photos.slice(i, i + numColumns));
-    }
-    return rows;
-  };
-
-  //피드 리스트가 존재하는 경우
-  const FeeListExist = ({feedList}) => {
-    const rows = groupPhotosInRows(feedList, numColumns);
-    return (
-      <View style={styles.feedListContainer}>
-        {rows.map((item, idx) => {
-          return renderRow(item, idx);
-        })}
-      </View>
-    );
   };
 
   return (
@@ -96,16 +49,10 @@ const Search = ({navigation}) => {
       </View>
 
       <View style={{flex: 1}}>
-        {!!feedList.length && <FeeListExist feedList={feedList} />}
+        {!!feedList.length && <FeedGallery feedList={feedList} />}
         {!feedList.length && (
           <View style={styles.noFeedArea}>
-            <NoFeedSvg
-              style={styles.noFeedIcon}
-              color="#ddd"
-              width={42}
-              height={48}
-            />
-            <Text style={styles.noFeenMsg}>검색 결과가 없습니다.</Text>
+            <NoFeed text="검색 결과가 없습니다." />
           </View>
         )}
       </View>
@@ -147,27 +94,6 @@ const styles = StyleSheet.create({
   searchBtnText: {
     color: '#fff',
     fontSize: 16,
-  },
-  feedListContainer: {
-    marginTop: 16,
-    flex: 1,
-  },
-  column: {
-    flexDirection: 'column',
-  },
-  row: {
-    flexDirection: 'row',
-  },
-  item: {
-    flex: 1,
-    height: imageSize,
-    width: imageSize,
-  },
-  image: {
-    width: imageSize,
-    height: imageSize,
-    borderWidth: 0.5,
-    borderColor: '#ddd',
   },
   feedListEmpty: {
     flex: 1,
