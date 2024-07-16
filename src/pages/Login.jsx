@@ -1,12 +1,18 @@
 import React, {useState} from 'react';
-import {Text, View, TextInput, Image} from 'react-native';
-import {TouchableOpacity} from 'react-native-gesture-handler';
-import {SafeAreaView} from 'react-native-safe-area-context';
-import {login as styles} from '../styles';
+import {
+  SafeAreaView,
+  Text,
+  View,
+  TouchableOpacity,
+  StyleSheet,
+} from 'react-native';
 import {loginApi} from '../api';
 import Toast from 'react-native-toast-message';
 import {saveCookieStorage} from '../utils/helpers';
-import {getEmailValid} from '../utils/valid';
+import {getEmailValid, getPasswordValid} from '../utils/valid';
+import PrimaryBtn from '../components/common/PrimaryBtn';
+import Input from '../components/common/Input';
+import Logo from '../components/common/Logo';
 
 const Login = ({navigation}) => {
   const [email, setEmail] = useState('');
@@ -16,7 +22,7 @@ const Login = ({navigation}) => {
   // 로그인 버튼 클릭 이벤트
   const sumbitForm = () => {
     setSumbit(true);
-    if (!getEmailValid(email) || !password.length) {
+    if (getEmailValid(email) || getPasswordValid(password)) {
       return;
     }
 
@@ -33,6 +39,7 @@ const Login = ({navigation}) => {
       saveCookieStorage(res);
       navigation.navigate('Main');
     } catch (e) {
+      console.log(e?.response);
       const text = e?.response?.data?.message || '에러가 발생했습니다.';
       Toast.show({type: 'error', text1: text});
     }
@@ -42,48 +49,36 @@ const Login = ({navigation}) => {
     <SafeAreaView style={styles.container}>
       {/* 로고 */}
       <View style={styles.logoArea}>
-        <Image
-          source={require('../assets/icons/arm.png')}
-          style={styles.logoIcon}
-          resizeMode="contain"
-        />
-        <Text style={styles.logoText}>오운완</Text>
+        <Logo height={60} width={60} fonsSize={32} />
       </View>
 
       {/* 이메일 */}
       <View style={styles.wrapper}>
-        <Text style={styles.textInputLabel}>이메일</Text>
-        <TextInput
-          onChangeText={setEmail}
+        <Input
           value={email}
-          style={styles.textInput}
-          placeholder="이메일"
+          setValue={setEmail}
+          submit={submit}
+          valid={getEmailValid(email)}
+          label="이메일"
+          secureTextEntry={false}
         />
-        <Text style={styles.errorMsg}>{submit && getEmailValid(email)}</Text>
       </View>
 
       {/* 비밀번호 */}
       <View style={styles.wrapper}>
-        <Text style={styles.textInputLabel}>비밀번호</Text>
-        <TextInput
-          secureTextEntry={true}
-          allowFontScaling={false}
-          onChangeText={setPassword}
+        <Input
           value={password}
-          style={styles.textInput}
-          placeholder="비밀번호"
-          password
+          setValue={setPassword}
+          submit={submit}
+          valid={getPasswordValid(password)}
+          label="비밀번호"
+          secureTextEntry={true}
         />
-        <Text style={styles.errorMsg}>
-          {submit && !password.length && '비밀번호를 입력해주세요'}
-        </Text>
       </View>
 
       <View style={styles.wrapper}>
         {/* 로그인 버튼 */}
-        <TouchableOpacity style={styles.loginBtn} onPress={sumbitForm}>
-          <Text style={styles.loginBtnText}>로그인</Text>
-        </TouchableOpacity>
+        <PrimaryBtn label="로그인" onPress={sumbitForm} />
 
         {/* 회원가입 버튼 */}
         <View style={styles.registBtn}>
@@ -95,5 +90,30 @@ const Login = ({navigation}) => {
     </SafeAreaView>
   );
 };
+
+export const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+  },
+  wrapper: {
+    paddingHorizontal: 16,
+    paddingTop: 8,
+  },
+  logoArea: {
+    marginTop: 40,
+    marginBottom: 20,
+  },
+  registBtn: {
+    alignItems: 'center',
+    paddingVertical: 12,
+  },
+  registBtnText: {
+    fontFamily: 'GmarketSansTTFMedium',
+    color: '#2E8CF4',
+    fontSize: 16,
+    fontWeight: 'semibold',
+  },
+});
 
 export default Login;

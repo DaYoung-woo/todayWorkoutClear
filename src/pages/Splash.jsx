@@ -3,6 +3,7 @@ import {View, Text, Image} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {styles} from '../styles/SplashStyle';
 import {checkCookieExpire} from '../utils/helpers';
+import Logo from '../components/common/Logo';
 
 const Splash = ({navigation}) => {
   useEffect(() => {
@@ -24,12 +25,7 @@ const Splash = ({navigation}) => {
   return (
     <View style={styles.container}>
       <View style={styles.wrapper}>
-        <Image
-          source={require('../assets/icons/arm.png')}
-          style={styles.logoIcon}
-          resizeMode="contain"
-        />
-        <Text style={styles.logoText}>오운완</Text>
+        <Logo width={80} height={80} fonsSize={40} marginTop={-2} />
       </View>
     </View>
   );

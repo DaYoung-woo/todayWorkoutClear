@@ -3,12 +3,12 @@ import {Image, StyleSheet, Text, View, Dimensions} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
 import {feedListApi, getAccountInfoApi} from '../../api';
+import {saveUserInfo} from '../../utils/helpers';
 import Toast from 'react-native-toast-message';
-import ChatSvg from '../../assets/icons/chat.svg';
 import FeedChatSvg from '../../assets/icons/feedChat.svg';
 import NoFeedSvg from '../../assets/icons/noFeed.svg';
 import EmotionGoodSvg from '../../assets/icons/emoticonGood.svg';
-import {saveUserInfo} from '../../utils/helpers';
+import Logo from '../../components/common/Logo';
 
 const screenWidth = Dimensions.get('window').width;
 
@@ -60,17 +60,8 @@ const Home = ({navigation, route}) => {
         <View style={styles.topBar}>
           {/* left 로고 영역 */}
           <View style={styles.logoContainer}>
-            <Image
-              source={require('../../assets/icons/arm.png')}
-              style={styles.logoImage}
-              resizeMode="contain"
-            />
-            <Text style={styles.logoText}>오운완</Text>
+            <Logo width={40} height={40} fonsSize={20} marginTop={-4} />
           </View>
-          {/* right 메시지 아이콘 */}
-          <TouchableOpacity>
-            <ChatSvg width={28} height={28} color={'#3e3e3e'} />
-          </TouchableOpacity>
         </View>
 
         {/* 사용자 피드 리스트 영역 */}
@@ -155,25 +146,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingVertical: 4,
     marginTop: 4,
-    paddingBottom: 8,
-  },
-  logoImage: {
-    height: 32,
-    width: 32,
-    marginTop: -4,
-  },
-  logoText: {
-    fontFamily: 'GmarketSansBold',
-    fontSize: 20,
-    color: '#2E8CF4',
-  },
-  storyContainer: {
-    flexDirection: 'row',
-    paddingVertical: 12,
-  },
-  storyItem: {
-    alignItems: 'center',
-    width: 84,
+    paddingBottom: 12,
   },
   profileArea: {
     alignItems: 'center',
