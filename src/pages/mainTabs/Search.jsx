@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   TouchableOpacity,
   SafeAreaView,
@@ -7,6 +7,7 @@ import {
   View,
   TextInput,
 } from 'react-native';
+import {ScrollView} from 'react-native-gesture-handler';
 import {searchFeedApi} from '../../api';
 import Toast from 'react-native-toast-message';
 import FeedGallery from '../../components/common/FeedGallery';
@@ -15,6 +16,23 @@ import NoFeed from '../../components/common/NoFeed';
 const Search = ({navigation}) => {
   const [search, setSeatch] = useState('');
   const [feedList, setFeedList] = useState([]);
+
+  useEffect(() => {
+    loadAllFeed();
+  });
+
+  const loadAllFeed = async () => {
+    try {
+      const res = await searchFeedApi({
+        searchTag: 'all',
+        page: 0,
+        pageSize: 20,
+      });
+      setFeedList(res.data.result.content);
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
   const submitForm = async () => {
     if (!search) {
@@ -48,7 +66,11 @@ const Search = ({navigation}) => {
       </View>
 
       <View style={{flex: 1}}>
-        {!!feedList.length && <FeedGallery feedList={feedList} />}
+        {!!feedList.length && (
+          <ScrollView>
+            <FeedGallery feedList={feedList} />
+          </ScrollView>
+        )}
         {!feedList.length && (
           <View style={styles.noFeedArea}>
             <NoFeed text="검색 결과가 없습니다." />

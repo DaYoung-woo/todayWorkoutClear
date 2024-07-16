@@ -5,6 +5,7 @@ import {accountInfoDetail} from '../../api';
 import {ScrollView} from 'react-native-gesture-handler';
 import NoFeed from '../../components/common/NoFeed';
 import FeedGallery from '../../components/common/FeedGallery';
+import {getUserInfo, saveUserInfo} from '../../utils/helpers';
 
 const Account = ({navigation}) => {
   const [accountInfo, setAccountInfo] = useState({});
@@ -26,6 +27,14 @@ const Account = ({navigation}) => {
     loadAccountInfoDetail();
   }, []);
 
+  useEffect(() => {
+    saveUserInfo({
+      nickName: accountInfo.nickName,
+      introduce: accountInfo.introduce,
+      profileImagePath: accountInfo.profileImagePath,
+    });
+  }, [accountInfo]);
+
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView contentContainerStyle={{flexGrow: 1}}>
@@ -41,8 +50,9 @@ const Account = ({navigation}) => {
             <View style={{textAlign: 'center'}}>
               <Image
                 source={
-                  accountInfo?.profileImagePath ||
-                  require('../../assets/images/basicUser.png')
+                  {
+                    uri: `http://13.209.27.220:8080${accountInfo?.profileImagePath}`,
+                  } || require('../../assets/images/basicUser.png')
                 }
                 style={styles.profileImage}
               />
@@ -116,6 +126,7 @@ const styles = StyleSheet.create({
   profileImage: {
     width: 88,
     height: 88,
+    borderRadius: 100,
   },
   profile: {flexDirection: 'row', paddingHorizontal: 16},
   accountInfoContainer: {

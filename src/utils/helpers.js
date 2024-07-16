@@ -8,6 +8,19 @@ export const makeQueryString = obj => {
     .join('');
 };
 
+// 해시태그 추출
+export const extractHashtags = content => {
+  // 해시태그 패턴 정의
+  const pattern = /#(\S+?)(?=\s|#|$)/g;
+  let matches;
+  let hashtags = [];
+  // 정규 표현식으로 매칭되는 모든 부분을 찾음
+  while ((matches = pattern.exec(content)) !== null) {
+    hashtags.push(matches[1]);
+  }
+  return hashtags;
+};
+
 // 쿠키 저장
 export const saveCookieStorage = async res => {
   const [cookie] = res.headers['set-cookie'];
@@ -37,21 +50,17 @@ export const checkCookieExpire = (storageCookie, navigation) => {
 // 스토리지에 사용자 정보 저장
 export const saveUserInfo = async userInfo => {
   try {
-    AsyncStorage.setItem('userInfo', JSON.stringify(userInfo));
+    await AsyncStorage.setItem('userInfo', JSON.stringify(userInfo));
   } catch (e) {
     console.log(e);
   }
 };
 
-// 해시태그 추출
-export const extractHashtags = content => {
-  // 해시태그 패턴 정의
-  const pattern = /#(\S+?)(?=\s|#|$)/g;
-  let matches;
-  let hashtags = [];
-  // 정규 표현식으로 매칭되는 모든 부분을 찾음
-  while ((matches = pattern.exec(content)) !== null) {
-    hashtags.push(matches[1]);
+export const getUserInfo = async () => {
+  try {
+    const userInfo = await AsyncStorage.getItem('userInfo');
+    return JSON.parse(userInfo);
+  } catch (e) {
+    console.log(e);
   }
-  return hashtags;
 };

@@ -13,6 +13,7 @@ import {getEmailValid, getPasswordValid} from '../utils/valid';
 import PrimaryBtn from '../components/common/PrimaryBtn';
 import Input from '../components/common/Input';
 import Logo from '../components/common/Logo';
+import TextBtn from '../components/common/TextBtn';
 
 const Login = ({navigation}) => {
   const [email, setEmail] = useState('');
@@ -81,11 +82,10 @@ const Login = ({navigation}) => {
         <PrimaryBtn label="로그인" onPress={sumbitForm} />
 
         {/* 회원가입 버튼 */}
-        <View style={styles.registBtn}>
-          <TouchableOpacity onPress={() => navigation.navigate('Regist')}>
-            <Text style={styles.registBtnText}>회원가입</Text>
-          </TouchableOpacity>
-        </View>
+        <TextBtn
+          label={'회원가입'}
+          onPress={() => navigation.navigate('Regist')}
+        />
       </View>
     </SafeAreaView>
   );

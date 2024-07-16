@@ -13,8 +13,12 @@ const instance = axios.create({
 
 // header 쿠키 세팅
 export const setCookie = cookie => {
-  cookie.split('=')[1];
-  instance.defaults.headers.Cookies = cookie;
+  if (cookie) {
+    cookie.split('=')[1];
+    instance.defaults.headers.Cookies = cookie;
+  } else {
+    instance.defaults.headers.Cookies = '';
+  }
 };
 
 // 로그인 api
@@ -81,4 +85,17 @@ export const updateCommentApi = param => {
     `/feed/${param.feedId}/reply/${param.replyId}`,
     param.reply,
   );
+};
+
+// 프로필 이미지 변경
+export const updateProfleImageApi = param => {
+  return instance.patch('/accounts/profile', param, {
+    headers: {'Content-Type': 'multipart/form-data'},
+    transformRequest: formData => formData,
+  });
+};
+
+// 로그아웃 api
+export const logoutApi = () => {
+  return instance.delete('/auth');
 };

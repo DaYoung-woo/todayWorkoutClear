@@ -302,6 +302,7 @@ const styles = StyleSheet.create({
   profileImage: {
     width: 52,
     height: 52,
+    borderRadius: 100,
   },
   profileText: {
     fontFamily: 'GmarketSansTTFMedium',
