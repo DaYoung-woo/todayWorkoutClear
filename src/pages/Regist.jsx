@@ -1,8 +1,7 @@
 import React, {useState} from 'react';
-import {Text, View, TextInput, TouchableOpacity} from 'react-native';
+import {Text, View, TouchableOpacity, StyleSheet} from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
 import Toast from 'react-native-toast-message';
-import {regist as styles} from '../styles';
 import {registApi} from '../api';
 import {
   getEmailValid,
@@ -13,6 +12,7 @@ import {
   getPhoneNumberValid,
 } from '../utils/valid';
 import Input from '../components/common/Input';
+import PrimaryBtn from '../components/common/PrimaryBtn';
 
 const Regist = ({navigation}) => {
   const [submit, setSubmit] = useState(false);
@@ -45,12 +45,12 @@ const Regist = ({navigation}) => {
       Toast.show({type: 'success', text1: '회원가입이 완료되었습니다.'});
       navigation.navigate('Login');
     } catch (e) {
-      console.log(e?.response?.data);
+      const text1 =
+        e?.response?.data?.errors[0]?.reason ||
+        '작성하신 내용을 다시 확인해주세요.';
       Toast.show({
         type: 'error',
-        text1:
-          e?.response?.data?.errors[0]?.reason ||
-          '작성하신 내용을 다시 확인해주세요.',
+        text1,
       });
     }
   };
@@ -123,12 +123,21 @@ const Regist = ({navigation}) => {
 
       {/* 회원가입 버튼 */}
       <View style={styles.wrapper}>
-        <TouchableOpacity style={styles.registBtn} onPress={sumbitForm}>
-          <Text style={styles.registBtnText}>회원가입</Text>
-        </TouchableOpacity>
+        <PrimaryBtn label="회원가입" onPress={sumbitForm} />
       </View>
     </ScrollView>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    backgroundColor: '#fff',
+    flex: 1,
+  },
+  wrapper: {
+    paddingHorizontal: 16,
+    paddingBottom: 12,
+  },
+});
 
 export default Regist;

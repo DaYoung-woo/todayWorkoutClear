@@ -1,13 +1,26 @@
 import React from 'react';
-import {Text, View, TouchableOpacity} from 'react-native';
-const PrimaryBtn = () => {
+import {Text, TouchableOpacity, StyleSheet} from 'react-native';
+const PrimaryBtn = ({label, onPress}) => {
   return (
-    <View style={styles.wrapper}>
-      <TouchableOpacity style={styles.registBtn} onPress={sumbitForm}>
-        <Text style={styles.registBtnText}>회원가입</Text>
-      </TouchableOpacity>
-    </View>
+    <TouchableOpacity style={styles.primaryBtn} onPress={onPress}>
+      <Text style={styles.primaryBtnText}>{label}</Text>
+    </TouchableOpacity>
   );
 };
 
+const styles = StyleSheet.create({
+  primaryBtn: {
+    backgroundColor: '#2E8CF4',
+    alignItems: 'center',
+    borderRadius: 5,
+    padding: 16,
+    marginTop: 20,
+  },
+  primaryBtnText: {
+    fontFamily: 'GmarketSansTTFMedium',
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#fff',
+  },
+});
 export default PrimaryBtn;

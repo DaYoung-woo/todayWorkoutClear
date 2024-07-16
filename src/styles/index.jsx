@@ -9,28 +9,6 @@ export const regist = StyleSheet.create({
     paddingHorizontal: 16,
     paddingBottom: 12,
   },
-  textInputLabel: {
-    fontFamily: 'GmarketSansTTFMedium',
-    paddingBottom: 12,
-    fontWeight: '600',
-    fontSize: 16,
-    color: '#555',
-  },
-  textInput: {
-    fontFamily: 'GmarketSansTTFMedium',
-    borderWidth: 1,
-    width: '100%',
-    padding: 12,
-    borderRadius: 5,
-    fontSize: 16,
-    borderColor: '#aaa',
-  },
-  errorMsg: {
-    color: 'red',
-    paddingTop: 4,
-    height: 20,
-    marginLeft: 2,
-  },
   registBtn: {
     backgroundColor: '#2E8CF4',
     alignItems: 'center',
