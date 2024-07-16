@@ -1,11 +1,11 @@
 import React, {useEffect, useState} from 'react';
-import {StyleSheet, View, TouchableOpacity, Image} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import Toast from 'react-native-toast-message';
 import Input from '../components/common/Input';
 import {getAccountInfoApi, updateAccountInfo} from '../api';
 import {getNicknameValid} from '../utils/valid';
 import PrimaryBtn from '../components/common/PrimaryBtn';
-import CameraSvg from '../assets/icons/camera.svg';
+import Profile from '../components/mypage/Profile';
 
 const Mypage = ({navigation}) => {
   const [submit, setSubmit] = useState(false);
@@ -58,13 +58,7 @@ const Mypage = ({navigation}) => {
   return (
     <View style={styles.container}>
       {/* 프로필 이미지 */}
-      <View style={styles.profileWrapper}>
-        <Image
-          source={profile || require('../assets/images/basicUser.png')}
-          style={styles.profile}
-        />
-        <CameraSvg width={44} height={44} color="#555" />
-      </View>
+      <Profile profile={profile} />
 
       {/* 닉네임 */}
       <View style={styles.wrapper}>
@@ -110,15 +104,23 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingBottom: 12,
   },
-  profileWrapper: {
+  profileContainer: {
     paddingHorizontal: 16,
     paddingBottom: 12,
     alignItems: 'center',
     marginTop: 16,
     marginBottom: 24,
   },
-  textareaHeight: {
-    height: 150,
+  profileWrapper: {},
+  cameraIcon: {
+    position: 'absolute',
+    bottom: 0,
+    right: 0,
+    backgroundColor: '#ddd',
+    borderRadius: 100,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 4,
   },
   profile: {
     width: 120,
