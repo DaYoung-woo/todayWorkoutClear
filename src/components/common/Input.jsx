@@ -1,16 +1,28 @@
 import React from 'react';
 import {View, Text, TextInput, StyleSheet} from 'react-native';
 
-const Input = ({value, setValue, submit, valid, label, secureTextEntry}) => {
+const Input = ({
+  value,
+  setValue,
+  submit,
+  valid,
+  label,
+  secureTextEntry,
+  multiline = false,
+  numberOfLines = 1,
+  placeholder,
+}) => {
   return (
     <View>
-      <Text style={styles.textInputLabel}>{label}</Text>
+      <Text style={styles.textInputLabel}>{placeholder || label}</Text>
       <TextInput
         onChangeText={setValue}
         value={value}
-        style={styles.textInput}
+        style={[styles.textInput, multiline && styles.textarea]}
         secureTextEntry={secureTextEntry}
         placeholder={label}
+        multiline={multiline}
+        numberOfLines={numberOfLines}
       />
       <Text style={styles.errorMsg}>{submit && valid}</Text>
     </View>
@@ -33,6 +45,9 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     fontSize: 16,
     borderColor: '#aaa',
+  },
+  textarea: {
+    height: 150,
   },
   errorMsg: {
     color: 'red',

@@ -1,17 +1,12 @@
 import React, {useEffect, useState} from 'react';
-import {
-  StyleSheet,
-  Text,
-  View,
-  TextInput,
-  TouchableOpacity,
-  Image,
-} from 'react-native';
-import {getAccountInfoApi, updateAccountInfo} from '../api';
+import {StyleSheet, View, TouchableOpacity, Image} from 'react-native';
 import Toast from 'react-native-toast-message';
 import Input from '../components/common/Input';
+import {getAccountInfoApi, updateAccountInfo} from '../api';
 import {getNicknameValid} from '../utils/valid';
 import PrimaryBtn from '../components/common/PrimaryBtn';
+import CameraSvg from '../assets/icons/camera.svg';
+
 const Mypage = ({navigation}) => {
   const [submit, setSubmit] = useState(false);
   const [nickname, setNickname] = useState('');
@@ -68,6 +63,7 @@ const Mypage = ({navigation}) => {
           source={profile || require('../assets/images/basicUser.png')}
           style={styles.profile}
         />
+        <CameraSvg width={44} height={44} color="#555" />
       </View>
 
       {/* 닉네임 */}
@@ -84,14 +80,16 @@ const Mypage = ({navigation}) => {
 
       {/* 자기소개 */}
       <View style={styles.wrapper}>
-        <Text style={styles.textInputLabel}>자기소개</Text>
-        <TextInput
-          style={[styles.textareaHeight, styles.textInput]}
+        <Input
+          value={content}
+          setValue={setContent}
+          submit={submit}
+          valid={true}
+          label={'아직 소개글이 없네요. 자신을 표현해보세요!'}
+          secureTextEntry={false}
+          placeholder={'자기소개'}
           multiline={true}
           numberOfLines={10}
-          placeholder={'아직 소개글이 없네요. 자신을 표현해보세요!'}
-          value={content}
-          onChangeText={setContent}
         />
       </View>
 
@@ -119,41 +117,12 @@ const styles = StyleSheet.create({
     marginTop: 16,
     marginBottom: 24,
   },
-  profile: {
-    width: 120,
-    height: 120,
-  },
-  textInputLabel: {
-    fontFamily: 'GmarketSansTTFMedium',
-    paddingBottom: 12,
-    fontWeight: '600',
-    fontSize: 16,
-    color: '#555',
-  },
-  textInput: {
-    fontFamily: 'GmarketSansTTFMedium',
-    borderWidth: 1,
-    width: '100%',
-    padding: 12,
-    borderRadius: 5,
-    fontSize: 16,
-    borderColor: '#aaa',
-  },
   textareaHeight: {
     height: 150,
   },
-  registBtn: {
-    backgroundColor: '#2E8CF4',
-    alignItems: 'center',
-    borderRadius: 5,
-    padding: 16,
-    marginTop: 20,
-  },
-  registBtnText: {
-    fontFamily: 'GmarketSansTTFMedium',
-    fontSize: 16,
-    fontWeight: 'bold',
-    color: '#fff',
+  profile: {
+    width: 120,
+    height: 120,
   },
 });
 

@@ -7,7 +7,6 @@ import {
   View,
   TextInput,
 } from 'react-native';
-import NoFeedSvg from '../../assets/icons/noFeed.svg';
 import {searchFeedApi} from '../../api';
 import Toast from 'react-native-toast-message';
 import FeedGallery from '../../components/common/FeedGallery';
@@ -94,19 +93,6 @@ const styles = StyleSheet.create({
   searchBtnText: {
     color: '#fff',
     fontSize: 16,
-  },
-  feedListEmpty: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  noFeenMsg: {
-    fontFamily: 'GmarketSansTTFMedium',
-    fontWeight: 'semibold',
-    fontSize: 16,
-    color: '#999',
-    textAlign: 'center',
-    lineHeight: 20,
   },
   noFeedArea: {
     flex: 1,

@@ -12,6 +12,8 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import CameraSvg from '../../assets/icons/camera.svg';
 import ImagePicker from 'react-native-image-crop-picker';
 import {addFeedListApi} from '../../api';
+import {extractHashtags} from '../../utils/helpers';
+import Toast from 'react-native-toast-message';
 
 const Plus = ({navigation, state}) => {
   const [content, setContent] = useState('');
@@ -28,13 +30,8 @@ const Plus = ({navigation, state}) => {
 
       const images = [...imageList];
       res.forEach(el => {
-        images.push({
-          id: Math.random(),
-          image: el,
-        });
+        images.push({id: Math.random(), image: el});
       });
-
-      console.log(res);
 
       setImageList(images);
     } catch (e) {
@@ -47,19 +44,6 @@ const Plus = ({navigation, state}) => {
     setImageList(prev => prev.filter(el => el.id !== id));
   };
 
-  // 해시태그 추출
-  const extractHashtags = () => {
-    // 해시태그 패턴 정의
-    const pattern = /#(\S+?)(?=\s|#|$)/g;
-    let matches;
-    let hashtags = [];
-    // 정규 표현식으로 매칭되는 모든 부분을 찾음
-    while ((matches = pattern.exec(content)) !== null) {
-      hashtags.push(matches[1]);
-    }
-    return hashtags;
-  };
-
   // 게시글 생성 api 요청
   const saveFeed = async () => {
     try {
@@ -68,8 +52,6 @@ const Plus = ({navigation, state}) => {
         content: content,
         tags: extractHashtags(content),
       });
-      console.log(feedRequest);
-
       formData.append('feedRequest', feedRequest);
 
       imageList.forEach(el => {
@@ -80,13 +62,13 @@ const Plus = ({navigation, state}) => {
             el.image.path.indexOf('picker/') + 7,
           )}`,
         };
-
         formData.append('image', image);
       });
 
-      const res = await addFeedListApi(formData);
-
-      console.log(res);
+      await addFeedListApi(formData);
+      Toast.show({type: 'success', text1: '피드 생성이 완료되었습니다.'});
+      setContent('');
+      setImageList([]);
     } catch (e) {
       console.log(e);
     }

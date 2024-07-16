@@ -42,3 +42,16 @@ export const saveUserInfo = async userInfo => {
     console.log(e);
   }
 };
+
+// 해시태그 추출
+export const extractHashtags = content => {
+  // 해시태그 패턴 정의
+  const pattern = /#(\S+?)(?=\s|#|$)/g;
+  let matches;
+  let hashtags = [];
+  // 정규 표현식으로 매칭되는 모든 부분을 찾음
+  while ((matches = pattern.exec(content)) !== null) {
+    hashtags.push(matches[1]);
+  }
+  return hashtags;
+};

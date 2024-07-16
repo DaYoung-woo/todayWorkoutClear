@@ -1,22 +1,10 @@
 import React, {useEffect, useState} from 'react';
-import {
-  Image,
-  StyleSheet,
-  Text,
-  View,
-  Dimensions,
-  TouchableOpacity,
-} from 'react-native';
+import {Image, StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {accountInfoDetail} from '../../api';
 import {ScrollView} from 'react-native-gesture-handler';
-
 import NoFeed from '../../components/common/NoFeed';
 import FeedGallery from '../../components/common/FeedGallery';
-
-const numColumns = 3;
-const screenWidth = Dimensions.get('window').width;
-const imageSize = screenWidth / numColumns;
 
 const Account = ({navigation}) => {
   const [accountInfo, setAccountInfo] = useState({});
@@ -102,7 +90,6 @@ const Account = ({navigation}) => {
         {/* 피드 리스트 */}
         {feedList.length ? (
           <View style={{flex: 1}}>
-            {/* <FeeListExist feedList={feedList} /> */}
             <FeedGallery feedList={feedList} />
           </View>
         ) : (
@@ -161,28 +148,6 @@ const styles = StyleSheet.create({
   noIntroduce: {
     fontFamily: 'GmarketSansTTFMedium',
     color: '#999',
-  },
-
-  feedListContainer: {
-    marginTop: 16,
-    flex: 1,
-  },
-  column: {
-    flexDirection: 'column',
-  },
-  row: {
-    flexDirection: 'row',
-  },
-  item: {
-    flex: 1,
-    height: imageSize,
-    width: imageSize,
-  },
-  image: {
-    width: imageSize,
-    height: imageSize,
-    borderWidth: 0.5,
-    borderColor: '#ddd',
   },
 });
 export default Account;

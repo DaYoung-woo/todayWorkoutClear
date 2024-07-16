@@ -1,7 +1,6 @@
 import React, {useEffect} from 'react';
-import {View, Text, Image} from 'react-native';
+import {View, StyleSheet} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {styles} from '../styles/SplashStyle';
 import {checkCookieExpire} from '../utils/helpers';
 import Logo from '../components/common/Logo';
 
@@ -32,3 +31,26 @@ const Splash = ({navigation}) => {
 };
 
 export default Splash;
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#F1F9FF',
+  },
+  wrapper: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  logoIcon: {
+    height: 80,
+    width: 80,
+    marginTop: -16,
+  },
+  logoText: {
+    fontFamily: 'GmarketSansBold',
+    fontSize: 40,
+    color: '#2E8CF4',
+  },
+});
