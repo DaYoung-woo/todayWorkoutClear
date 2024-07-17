@@ -24,11 +24,13 @@ const Profile = ({feed, following, follower, profileImagePath}) => {
           <Text style={styles.accountInfoItemCount}>{feed}</Text>
           <Text style={styles.accountInfoItemLabel}>피드</Text>
         </View>
-        <TouchableOpacity onPress={() => navigation.navigate('Follow')}>
+        <TouchableOpacity
+          onPress={() => navigation.navigate('Follow', {isFollwing: true})}>
           <Text style={styles.accountInfoItemCount}>{following}</Text>
           <Text style={styles.accountInfoItemLabel}>팔로잉</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => navigation.navigate('Follow')}>
+        <TouchableOpacity
+          onPress={() => navigation.navigate('Follow', {isFollwing: false})}>
           <Text style={styles.accountInfoItemCount}>{follower}</Text>
           <Text style={styles.accountInfoItemLabel}>팔로워</Text>
         </TouchableOpacity>

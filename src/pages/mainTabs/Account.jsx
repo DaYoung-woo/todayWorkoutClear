@@ -16,6 +16,7 @@ const Account = ({navigation}) => {
     try {
       const res = await accountInfoDetail();
       const {accountInfoResponse, feedList: feeds} = res.data.result;
+      console.log(res.data.result);
       setAccountInfo(accountInfoResponse);
       setFeedList(feeds);
     } catch (e) {

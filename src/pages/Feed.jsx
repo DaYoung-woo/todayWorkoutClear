@@ -1,21 +1,23 @@
 import React, {useEffect, useState} from 'react';
-import {StyleSheet, Text, View, Image, Dimensions, Modal} from 'react-native';
+import {StyleSheet, Text, View, Image, Dimensions} from 'react-native';
 
 import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
 import Toast from 'react-native-toast-message';
-import {addCommentApi, getFeedDetail, updateFeedEmotion} from '../api';
+import {addCommentApi, addFollowing, getFeedDetail} from '../api';
 
 import Comment from '../components/feed/Comment';
-import InputWithBtn from '../components/common/InputWithBtn';
 import Emotion from '../components/feed/Emotion';
+import InputWithBtn from '../components/common/InputWithBtn';
 import TagViewRender from '../components/feed/TagViewRender';
 import ImageCarousel from '../components/feed/ImageCarousel';
+import ConfirmModal from '../components/common/ConfirmModal';
 
 const screenWidth = Dimensions.get('window').width;
 
 const Feed = ({route}) => {
   const {id} = route.params;
   const [comment, setComment] = useState('');
+  const [confirmModalShow, setConfirmModalShow] = useState(false);
   const [feed, setFeed] = useState({
     content: '',
     emotions: {},
@@ -35,6 +37,7 @@ const Feed = ({route}) => {
   const loadFeedDetail = async () => {
     try {
       const res = await getFeedDetail(id);
+      console.log(res.data.result);
       setFeed(res.data.result);
     } catch (e) {
       console.log(e);
@@ -44,10 +47,7 @@ const Feed = ({route}) => {
   // 댓글 작성 전 유효성 검사
   const submitForm = () => {
     if (!comment.length) {
-      Toast.show({
-        type: 'error',
-        text1: '댓글을 입력해주세요.',
-      });
+      Toast.show({type: 'error', text1: '댓글을 입력해주세요.'});
       return;
     }
     addComment();
@@ -57,10 +57,7 @@ const Feed = ({route}) => {
   const addComment = async () => {
     try {
       await addCommentApi(feed.id, comment);
-      Toast.show({
-        type: 'success',
-        text1: '댓글을 등록했습니다.',
-      });
+      Toast.show({type: 'success', text1: '댓글을 등록했습니다.'});
       loadFeedDetail();
       setComment('');
     } catch (e) {
@@ -68,7 +65,27 @@ const Feed = ({route}) => {
     }
   };
 
-  const openFollowModal = () => {};
+  const openFollowModal = () => {
+    setConfirmModalShow(true);
+  };
+  const onPressNo = () => {
+    setConfirmModalShow(false);
+  };
+  const onPressYes = async () => {
+    try {
+      const res = await addFollowing({
+        email: feed.email,
+      });
+      Toast.show({
+        type: 'success',
+        text1: `${feed.nickname}님을 팔로우 합니다.`,
+      });
+      console.log(res);
+    } catch (e) {
+      console.log(e?.response?.data);
+    }
+    setConfirmModalShow(false);
+  };
 
   return (
     <ScrollView style={styles.container}>
@@ -132,6 +149,14 @@ const Feed = ({route}) => {
           )}
         </View>
       </View>
+      <ConfirmModal
+        isShow={confirmModalShow}
+        question={`${feed.nickname}님을 팔로우하시겠습니까?`}
+        yesMsg="네"
+        noMsg="아니오"
+        onPressNo={onPressNo}
+        onPressYes={onPressYes}
+      />
     </ScrollView>
   );
 };
@@ -164,8 +189,10 @@ const styles = StyleSheet.create({
   commentEmptyText: {
     fontFamily: 'GmarketSansTTFMedium',
     textAlign: 'center',
-    paddingVertical: 24,
+    paddingTop: 24,
+    paddingBottom: 48,
     color: '#aaa',
+    marginBottom: 24,
   },
 });
 

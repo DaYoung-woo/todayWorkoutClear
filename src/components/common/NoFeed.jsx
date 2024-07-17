@@ -7,8 +7,8 @@ const NoFeed = ({text}) => {
       <NoFeedSvg
         style={styles.noFeedIcon}
         color="#ddd"
-        width={42}
-        height={48}
+        width={44}
+        height={44}
       />
       <Text style={styles.noFeedText}>{text}</Text>
     </View>

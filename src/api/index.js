@@ -89,3 +89,8 @@ export const updateProfleImageApi = param => {
 export const logoutApi = () => {
   return instance.delete('/auth');
 };
+
+// 팔로우하기
+export const addFollowing = param => {
+  return instance.post('/follwing', param);
+};

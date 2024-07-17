@@ -113,6 +113,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 12,
   },
   searchBtnText: {
+    fontFamily: 'GmarketSansTTFMedium',
     color: '#fff',
     fontSize: 16,
   },

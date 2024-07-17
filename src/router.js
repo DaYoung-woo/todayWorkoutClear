@@ -14,10 +14,9 @@ import Search from './pages/mainTabs/Search';
 import Play from './pages/mainTabs/Play';
 import Plus from './pages/mainTabs/Plus';
 import Account from './pages/mainTabs/Account';
-import Follower from './pages/follow/Follower.jsx';
-import Follwing from './pages/follow/Follwing.jsx';
 import Mypage from './pages/Mypage.jsx';
 import Feed from './pages/Feed.jsx';
+import Follow from './pages/Follow.jsx';
 
 const Stack = createNativeStackNavigator();
 const TabBottom = createBottomTabNavigator();
@@ -41,8 +40,23 @@ const loadBottomTab = props => {
 const FollowTab = props => {
   return (
     <TopTab.Navigator>
-      <TopTab.Screen name="Follower" component={Follower} />
-      <TopTab.Screen name="Follwing" component={Follwing} />
+      <TopTab.Screen
+        name="Follower"
+        component={Follow}
+        screenOptions={{tabBarLabelStyle: {fontFamily: 'GmarketSansTTFMedium'}}}
+        options={{
+          title: '팔로워',
+        }}
+        {...props}
+      />
+      <TopTab.Screen
+        name="Following"
+        component={Follow}
+        options={{
+          title: '팔로잉',
+        }}
+        {...props}
+      />
     </TopTab.Navigator>
   );
 };
