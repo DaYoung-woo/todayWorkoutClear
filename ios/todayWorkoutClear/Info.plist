@@ -26,14 +26,21 @@
 	<true/>
 	<key>NSAppTransportSecurity</key>
 	<dict>
-	  <!-- Do not change NSAllowsArbitraryLoads to true, or you will risk app rejection! -->
 		<key>NSAllowsArbitraryLoads</key>
-		<false/>
+		<true/>
 		<key>NSAllowsLocalNetworking</key>
 		<true/>
+		<key>NSExceptionDomains</key>
+		<dict>
+			<key>13.209.27.220</key>
+			<dict>
+				<key>NSExceptionAllowsInsecureHTTPLoads</key>
+				<true/>
+			</dict>
+		</dict>
 	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
+	<string/>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIRequiredDeviceCapabilities</key>
@@ -48,5 +55,64 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>UIAppFonts</key>
+	<array>
+		<string>GamjaFlower-Regular.ttf</string>
+		<string>Jua-Regular.ttf</string>
+		<string>NanumPenScript-Regular.ttf</string>
+		<string>NotoSansKR-VariableFont_wght.ttf</string>
+		<string>JalnanGothicTTF.ttf</string>
+		<string>GmarketSansTTFMedium.ttf</string>
+		<string>GmarketSansBold.otf</string>
+	</array>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>$(PRODUCT_NAME) would like access to your photo gallery</string>
+	<key>NSCameraUsageDescription</key>
+	<string>$(PRODUCT_NAME) would like to use your camera</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>$(PRODUCT_NAME) would like to save photos to your photo gallery</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>$(PRODUCT_NAME) would like to use your microphone (for videos)</string>
+  <key>NSAppleMusicUsageDescription</key>
+  <string>YOUR TEXT</string>
+  <key>NSBluetoothAlwaysUsageDescription</key>
+  <string>YOUR TEXT</string>
+  <key>NSBluetoothPeripheralUsageDescription</key>
+  <string>YOUR TEXT</string>
+  <key>NSCalendarsUsageDescription</key>
+  <string>YOUR TEXT</string>
+  <key>NSCameraUsageDescription</key>
+  <string>YOUR TEXT</string>
+  <key>NSContactsUsageDescription</key>
+  <string>YOUR TEXT</string>
+  <key>NSFaceIDUsageDescription</key>
+  <string>YOUR TEXT</string>
+  <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+  <string>YOUR TEXT</string>
+  <key>NSLocationAlwaysUsageDescription</key>
+  <string>YOUR TEXT</string>
+  <key>NSLocationTemporaryUsageDescriptionDictionary</key>
+  <dict>
+    <key>YOUR-PURPOSE-KEY</key>
+    <string>YOUR TEXT</string>
+  </dict>
+  <key>NSLocationWhenInUseUsageDescription</key>
+  <string>YOUR TEXT</string>
+  <key>NSMicrophoneUsageDescription</key>
+  <string>YOUR TEXT</string>
+  <key>NSMotionUsageDescription</key>
+  <string>YOUR TEXT</string>
+  <key>NSPhotoLibraryUsageDescription</key>
+  <string>YOUR TEXT</string>
+  <key>NSPhotoLibraryAddUsageDescription</key>
+  <string>YOUR TEXT</string>
+  <key>NSRemindersUsageDescription</key>
+  <string>YOUR TEXT</string>
+  <key>NSSpeechRecognitionUsageDescription</key>
+  <string>YOUR TEXT</string>
+  <key>NSSiriUsageDescription</key>
+  <string>YOUR TEXT</string>
+  <key>NSUserTrackingUsageDescription</key>
+  <string>YOUR TEXT</string>
 </dict>
 </plist>
