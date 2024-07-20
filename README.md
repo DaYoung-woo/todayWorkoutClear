@@ -1,3 +1,6 @@
+# 오운완 프로젝트
+오운완 프로젝트는 오늘의 운동을 인증하는 sns 어플입니다
+
 ## 주요 사용 라이브러리
 react react-native  
 react-native-async-storage/async-storage - 스토리지  
