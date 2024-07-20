@@ -8,12 +8,13 @@ react-native-svg react-native-svg-transformer - svg 이미지 사용
 # 구현 기능
 
 ## 회원가입  
-![다운로드 (1)](https://github.com/user-attachments/assets/d8bff4a0-a677-400c-8bd1-ae7a1c3a5661)  
+<img src="https://github.com/user-attachments/assets/d8bff4a0-a677-400c-8bd1-ae7a1c3a5661" alt="Databay showcase gif" title="Databay showcase gif" width="200"/>
+
 <br />
 <br />
 
 ## 로그인  
-![다운로드 (2)](https://github.com/user-attachments/assets/9e6477a9-5d4d-4d3f-b3df-b6cd88e7feac)  
+<img src="https://github.com/user-attachments/assets/9e6477a9-5d4d-4d3f-b3df-b6cd88e7feac" alt="Databay showcase gif" title="Databay showcase gif" width="200"/>
 <br />
 <br />
 
